@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 async function main() {
   console.log('🌱 Starting seed...')
   
-  // Create admin user
+  // Create admin user with profile image
   const adminPassword = await bcrypt.hash('admin123', 10)
   const admin = await prisma.user.create({
     data: {
@@ -17,11 +17,12 @@ async function main() {
       phone: '+91 9876543210',
       address: 'Bengaluru, Karnataka, India',
       bio: 'Platform administrator',
+      profileImage: 'https://ui-avatars.com/api/?name=Admin+User&background=f97316&color=fff&size=200',
     },
   })
   console.log('✅ Admin user created:', admin.email)
   
-  // Create test students
+  // Create test students with profile images
   const studentPassword = await bcrypt.hash('student123', 10)
   const students = await Promise.all([
     prisma.user.create({
@@ -33,6 +34,7 @@ async function main() {
         phone: '+91 9876543211',
         address: 'Mumbai, Maharashtra, India',
         bio: 'Passionate learner',
+        profileImage: 'https://ui-avatars.com/api/?name=John+Doe&background=4f46e5&color=fff&size=200',
       },
     }),
     prisma.user.create({
@@ -44,6 +46,7 @@ async function main() {
         phone: '+91 9876543212',
         address: 'Delhi, India',
         bio: 'Tech enthusiast',
+        profileImage: 'https://ui-avatars.com/api/?name=Jane+Smith&background=ec4899&color=fff&size=200',
       },
     }),
   ])
@@ -56,7 +59,7 @@ async function main() {
         title: 'Complete Web Development Bootcamp',
         description: 'Learn HTML, CSS, JavaScript, React, Node.js, and more in this comprehensive web development course. Perfect for beginners who want to become full-stack developers.',
         price: 4999,
-        imageUrl: '/images/web-dev-course.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80',
         isLive: true,
         duration: '40 hours',
         level: 'Beginner',
@@ -100,7 +103,7 @@ async function main() {
         title: 'Data Science with Python',
         description: 'Master data science concepts using Python. Learn pandas, numpy, matplotlib, and machine learning basics.',
         price: 5999,
-        imageUrl: '/images/data-science-course.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
         isLive: true,
         duration: '35 hours',
         level: 'Intermediate',
@@ -137,7 +140,7 @@ async function main() {
         title: 'Digital Marketing Masterclass',
         description: 'Learn SEO, social media marketing, content marketing, and PPC advertising to grow any business online.',
         price: 3999,
-        imageUrl: '/images/digital-marketing-course.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80',
         isLive: true,
         duration: '25 hours',
         level: 'Beginner',
@@ -174,7 +177,7 @@ async function main() {
         title: 'Mobile App Development with React Native',
         description: 'Build cross-platform mobile apps using React Native. Deploy to both iOS and Android from a single codebase.',
         price: 6999,
-        imageUrl: '/images/mobile-dev-course.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80',
         isLive: false, // Draft course
         duration: '45 hours',
         level: 'Intermediate',
