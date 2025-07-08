@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/providers/theme-provider'
+import { Header } from '@/components/common/header'
+import { Footer } from '@/components/common/footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,7 +26,11 @@ export default function RootLayout({
           enableSystem={false}
           storageKey="rass-theme"
         >
-          {children}
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>
