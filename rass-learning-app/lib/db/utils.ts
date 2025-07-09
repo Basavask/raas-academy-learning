@@ -142,7 +142,7 @@ export async function getAdminStats() {
     }),
   ])
   
-  const totalRevenue = payments.reduce((sum, payment) => sum + payment.amount, 0)
+  const totalRevenue = payments.reduce((sum:any, payment:any) => sum + payment.amount, 0)
   
   const recentEnrollments = await prisma.enrollment.findMany({
     take: 5,
@@ -208,7 +208,7 @@ export async function getStudentStats(userId: string) {
   })
   
   const enrolledCourses = enrollments.length
-  const completedCourses = enrollments.filter(e => e.completedAt).length
+  const completedCourses = enrollments.filter((e:any) => e.completedAt).length
   const inProgressCourses = enrolledCourses - completedCourses
   
   const payments = await prisma.payment.findMany({
@@ -219,7 +219,7 @@ export async function getStudentStats(userId: string) {
     select: { amount: true },
   })
   
-  const totalSpent = payments.reduce((sum, payment) => sum + payment.amount, 0)
+  const totalSpent = payments.reduce((sum:any, payment:any) => sum + payment.amount, 0)
   
   const recentActivity = await prisma.enrollment.findMany({
     where: { userId },
