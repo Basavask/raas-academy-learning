@@ -10,12 +10,17 @@ const registerSchema = z.object({
 })
 
 export async function POST(req: NextRequest) {
+  console.log("Register API called")
+  
   try {
+    // Parse request body
     const body = await req.json()
+    console.log("Request body:", { ...body, password: "[HIDDEN]" })
     
     // Validate input
     const validationResult = registerSchema.safeParse(body)
     if (!validationResult.success) {
+      console.log("Validation failed:", validationResult.error)
       return NextResponse.json(
         { 
           success: false,
@@ -28,12 +33,28 @@ export async function POST(req: NextRequest) {
 
     const { email, password, name } = validationResult.data
 
+    // Test database connection
+    try {
+      await prisma.$connect()
+      console.log("Database connected")
+    } catch (dbError) {
+      console.error("Database connection failed:", dbError)
+      return NextResponse.json(
+        { 
+          success: false,
+          error: 'Database connection failed' 
+        },
+        { status: 500 }
+      )
+    }
+
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email },
     })
 
     if (existingUser) {
+      console.log("User already exists:", email)
       return NextResponse.json(
         { 
           success: false,
@@ -45,6 +66,7 @@ export async function POST(req: NextRequest) {
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10)
+    console.log("Password hashed")
 
     // Create user with default profile image
     const user = await prisma.user.create({
@@ -63,6 +85,8 @@ export async function POST(req: NextRequest) {
         profileImage: true,
       },
     })
+    
+    console.log("User created successfully:", user.email)
 
     return NextResponse.json({
       success: true,
