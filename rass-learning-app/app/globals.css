@@ -77,3 +77,30 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-500 dark:bg-gray-500;
 }
+
+/* Swiper custom styles */
+.course-slider .swiper-button-next,
+.course-slider .swiper-button-prev {
+  @apply bg-white dark:bg-gray-800 rounded-full w-12 h-12 shadow-lg;
+  color: #f97316;
+}
+
+.course-slider .swiper-button-next:after,
+.course-slider .swiper-button-prev:after {
+  font-size: 20px;
+}
+
+.course-slider .swiper-pagination-bullet {
+  @apply bg-gray-400 dark:bg-gray-600;
+}
+
+.course-slider .swiper-pagination-bullet-active {
+  @apply bg-primary-500;
+}
+
+@media (max-width: 768px) {
+  .course-slider .swiper-button-next,
+  .course-slider .swiper-button-prev {
+    display: none;
+  }
+}
