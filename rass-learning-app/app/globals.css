@@ -104,3 +104,24 @@
     display: none;
   }
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  
+  .max-w-2xl, .max-w-2xl * {
+    visibility: visible;
+  }
+  
+  .max-w-2xl {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  
+  .print\\:hidden {
+    display: none !important;
+  }
+}

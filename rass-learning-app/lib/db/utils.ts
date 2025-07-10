@@ -40,6 +40,7 @@ export async function getPublishedCourses(options?: {
   skip?: number
   take?: number
   category?: string
+  level?: string
   search?: string
 }) {
   const where: Prisma.CourseWhereInput = {
@@ -48,6 +49,10 @@ export async function getPublishedCourses(options?: {
   
   if (options?.category) {
     where.category = options.category
+  }
+  
+  if (options?.level) {
+    where.level = options.level
   }
   
   if (options?.search) {
