@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Loader2, Eye, EyeOff } from 'lucide-react'
+
 
 const registerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -31,6 +32,18 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const { data: session, status } = useSession()
+  
+
+  useEffect(() => {
+    if (status === 'authenticated' && session?.user) {
+      if (session.user.role === 'ADMIN') {
+        router.push('/admin/dashboard')
+      } else {
+        router.push('/student/dashboard')
+      }
+    }
+  }, [session, status, router])
 
   const {
     register,
@@ -42,7 +55,7 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true)
-
+  
     try {
       const response = await fetch('/api/auth/register', {
         method: 'POST',
@@ -53,17 +66,14 @@ export default function RegisterPage() {
           password: data.password,
         }),
       })
-
-      console.log('rrrr', response);
-      
-
+  
       const result = await response.json()
-
+  
       if (!response.ok) {
         throw new Error(result.error || 'Registration failed')
       }
-
-      toast.success('Registration successful! Please login.')
+  
+      toast.success('Registration successful! Logging you in...')
       
       // Auto login after registration
       const signInResult = await signIn('credentials', {
@@ -71,16 +81,16 @@ export default function RegisterPage() {
         password: data.password,
         redirect: false,
       })
-
+  
       if (signInResult?.error) {
+        toast.error('Auto-login failed. Please login manually.')
         router.push('/login')
       } else {
-        router.push('/student/dashboard')
-        router.refresh()
+        // The useEffect will handle the redirect
+        toast.success('Redirecting to dashboard...')
       }
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Registration failed')
-    } finally {
       setIsLoading(false)
     }
   }

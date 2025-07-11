@@ -57,8 +57,8 @@ export async function getPublishedCourses(options?: {
   
   if (options?.search) {
     where.OR = [
-      { title: { contains: options.search, mode: 'insensitive' } },
-      { description: { contains: options.search, mode: 'insensitive' } },
+      { title: { contains: options.search } },
+      { description: { contains: options.search } },
     ]
   }
   
@@ -82,7 +82,6 @@ export async function getPublishedCourses(options?: {
   
   return { courses, total }
 }
-
 export async function getCourseWithModules(courseId: string) {
   return prisma.course.findUnique({
     where: { id: courseId },
