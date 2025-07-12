@@ -1,16 +1,17 @@
-/* NProgress Custom Styles */
+/* NProgress Custom Styles - More Visible */
 #nprogress {
     pointer-events: none;
   }
   
   #nprogress .bar {
-    background: rgb(249 115 22); /* primary-500 color */
+    background: rgb(249 115 22) !important; /* Orange color */
     position: fixed;
-    z-index: 1031;
+    z-index: 9999;
     top: 0;
     left: 0;
     width: 100%;
-    height: 3px;
+    height: 4px; /* Increased from 3px to 4px */
+    box-shadow: 0 2px 10px rgba(249, 115, 22, 0.5); /* Add glow effect */
   }
   
   #nprogress .peg {
@@ -19,40 +20,25 @@
     right: 0px;
     width: 100px;
     height: 100%;
-    box-shadow: 0 0 10px rgb(249 115 22), 0 0 5px rgb(249 115 22);
+    box-shadow: 0 0 15px rgb(249 115 22), 0 0 8px rgb(249 115 22);
     opacity: 1;
     transform: rotate(3deg) translate(0px, -4px);
   }
   
-  /* Loading overlay */
-  .loading-overlay {
+  /* Add a background bar for better visibility */
+  #nprogress::before {
+    content: '';
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(2px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+    width: 100%;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 9998;
   }
   
-  .dark .loading-overlay {
-    background: rgba(0, 0, 0, 0.8);
-  }
-  
-  .loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid #f3f4f6;
-    border-top: 3px solid rgb(249 115 22);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  /* Dark mode support */
+  .dark #nprogress .bar {
+    background: rgb(251 146 60) !important; /* Lighter orange for dark mode */
+    box-shadow: 0 2px 15px rgba(251, 146, 60, 0.7);
   }
