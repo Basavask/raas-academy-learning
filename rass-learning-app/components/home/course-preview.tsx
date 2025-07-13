@@ -78,9 +78,9 @@ export function CoursePreview() {
             >
               By Category
             </Button>
-            <Button variant="ghost" className="rounded-md px-6">
+            {/* <Button variant="ghost" className="rounded-md px-6">
               By Institute
-            </Button>
+            </Button> */}
           </div>
         </div>
 

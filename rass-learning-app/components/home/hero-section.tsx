@@ -10,28 +10,28 @@ import { useRouter } from '@/hooks/use-route-loading'
 const testimonials = [
   {
     id: 1,
-    name: "Aparna Singh",
-    role: "College Dropout → Application Engineer",
+    name: "Hurmit Grover",
+    role: "SSC Aspirant → SDE 1",
     company: "KAPIVA",
-    quote: "As a college drop out, I found the courage to rewrite my future, one line of code at a time. RAAS skilled me to work as a developer.",
-    image: "/testimonials/aparna.jpg"
+    quote: "The web development program opened new doors. With no coding background, I have landed at Kapiva and there's no looking back.",
+    image: "/testimonials/hurmit.jpg"
   },
   {
     id: 2,
+    name: "Aparna Singh",
+    role: "College Dropout → Application Engineer",
+    company: "KAPIVA",
+    quote: "As a college drop out, I found the courage to rewrite my future, one line of code at a time. Masai skilled me to work as a developer.",
+    image: "/testimonials/aparna.jpg"
+  },
+  {
+    id: 3,
     name: "Rohit Goyal",
     company: "Walmart",
     metric: "160%",
     metricLabel: "Salary Increase",
     quote: "My journey from curiosity to career growth proves that with learning and dedication, a person can conquer any challenge.",
     image: "/testimonials/rohit.jpg"
-  },
-  {
-    id: 3,
-    name: "Hurmit Grover",
-    role: "SSC Aspirant → SDE 1",
-    company: "KAPIVA",
-    quote: "The web development program opened new doors. With no coding background, I have landed at Kapiva and there's no looking back.",
-    image: "/testimonials/hurmit.jpg"
   }
 ]
 
@@ -66,7 +66,7 @@ export function HeroSection() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 dark:text-white leading-tight mb-4">
               Your AI Powered Future,
               <br />
-              Starts at RAAS.
+              Starts at RASS.
             </h1>
             <p className="text-xl md:text-2xl text-primary font-medium mb-12">
               Excel with India's top outcome based platform
@@ -113,9 +113,9 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right Content - Testimonial */}
+          {/* Right Content - Testimonial Card */}
           <div className="flex-1 w-full max-w-lg lg:max-w-xl">
-            <div className="relative h-[500px] md:h-[600px]">
+            <div className="relative h-[450px] md:h-[550px]">
               {testimonials.map((testimonial, index) => (
                 <div
                   key={testimonial.id}
@@ -125,24 +125,36 @@ export function HeroSection() {
                       : 'opacity-0 z-0'
                   }`}
                 >
-                  <div className="bg-primary rounded-3xl p-8 h-full text-white relative overflow-hidden">
-                    {/* Background Image */}
-                    <div className="absolute bottom-0 right-0 w-3/4 h-3/4">
-                      <Image
-                        src={testimonial.image || '/placeholder-person.png'}
-                        alt={testimonial.name}
-                        fill
-                        className="object-cover object-top opacity-50 grayscale"
-                        priority={index === 0}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent"></div>
+                  <div className="bg-primary rounded-[2rem] p-8 md:p-10 h-full text-white relative overflow-hidden">
+                    {/* Person Image - Positioned at bottom right */}
+                    <div className="absolute bottom-0 right-0 w-[60%] h-[70%]">
+                      {/* Gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/90 to-transparent z-10"></div>
+                      <div className="absolute inset-0 bg-gradient-to-l from-primary via-primary/80 to-transparent z-10"></div>
+                      
+                      {/* Image or placeholder */}
+                      {testimonial.image ? (
+                        <Image
+                          src={testimonial.image}
+                          alt={testimonial.name}
+                          fill
+                          className="object-cover object-top"
+                          priority={index === 0}
+                          onError={(e) => {
+                            // Fallback to placeholder if image fails
+                            e.currentTarget.style.display = 'none'
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-orange-400 to-orange-600 opacity-30"></div>
+                      )}
                     </div>
 
-                    {/* Content */}
-                    <div className="relative z-20">
-                      {/* Metric or Role */}
+                    {/* Content - Positioned above image */}
+                    <div className="relative z-20 h-full flex flex-col">
+                      {/* Role or Metric */}
                       {testimonial.metric ? (
-                        <div className="flex items-center gap-2 mb-6">
+                        <div className="flex items-center gap-3 mb-6">
                           <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M7 17L17 7M17 7H7M17 7V17" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
@@ -152,22 +164,24 @@ export function HeroSection() {
                           </div>
                         </div>
                       ) : testimonial.role && (
-                        <p className="text-lg opacity-90 mb-4">{testimonial.role}</p>
+                        <p className="text-lg font-medium opacity-90 mb-4">{testimonial.role}</p>
                       )}
 
                       {/* Name */}
-                      <h3 className="text-3xl font-bold mb-4">{testimonial.name}</h3>
+                      <h3 className="text-2xl md:text-3xl font-bold mb-3">{testimonial.name}</h3>
 
                       {/* Company Badge */}
-                      <div className="inline-block bg-white text-primary px-4 py-2 rounded-full font-bold mb-8">
+                      <div className="inline-flex self-start bg-white text-primary px-4 py-2 rounded-full font-bold text-sm mb-6">
                         {testimonial.company}
                       </div>
 
-                      {/* Quote */}
-                      <blockquote className="text-lg leading-relaxed">
-                        <span className="text-4xl opacity-50">"</span>
-                        {testimonial.quote}
-                        <span className="text-4xl opacity-50">"</span>
+                      {/* Quote - Limited height to prevent overlap */}
+                      <blockquote className="text-base md:text-lg leading-relaxed flex-1 max-w-[85%]">
+                        <span className="text-3xl opacity-50">"</span>
+                        <span className="inline-block px-2">
+                          {testimonial.quote}
+                        </span>
+                        <span className="text-3xl opacity-50">"</span>
                       </blockquote>
                     </div>
                   </div>
