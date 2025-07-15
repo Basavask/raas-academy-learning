@@ -10,6 +10,7 @@ import { Footer } from '@/components/common/footer'
 import { GlobalLoader } from '@/components/common/global-loader'
 import { Toaster } from 'react-hot-toast'
 import { Suspense } from 'react'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -57,6 +58,7 @@ export default function RootLayout({
             </ThemeProvider>
           </LoadingProvider>
         </AuthProvider>
+        <SpeedInsights />
       </body>
     </html>
   )
