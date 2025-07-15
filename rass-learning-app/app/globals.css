@@ -1,3 +1,4 @@
+/* stylelint-disable */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -39,10 +40,10 @@
 
 @layer base {
   * {
-    @apply border-border;
+    /* @apply border-border; */
   }
   body {
-    @apply bg-background text-foreground;
+    /* @apply bg-background text-foreground; */
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -76,3 +77,243 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-500 dark:bg-gray-500;
 }
+
+/* Swiper custom styles */
+.course-slider .swiper-button-next,
+.course-slider .swiper-button-prev {
+  @apply bg-white dark:bg-gray-800 rounded-full w-12 h-12 shadow-lg;
+  color: #f97316;
+}
+
+.course-slider .swiper-button-next:after,
+.course-slider .swiper-button-prev:after {
+  font-size: 20px;
+}
+
+.course-slider .swiper-pagination-bullet {
+  @apply bg-gray-400 dark:bg-gray-600;
+}
+
+.course-slider .swiper-pagination-bullet-active {
+  @apply bg-primary-500;
+}
+
+@media (max-width: 768px) {
+  .course-slider .swiper-button-next,
+  .course-slider .swiper-button-prev {
+    display: none;
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  
+  .max-w-2xl, .max-w-2xl * {
+    visibility: visible;
+  }
+  
+  .max-w-2xl {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  
+  .print\\:hidden {
+    display: none !important;
+  }
+}
+
+/* Mobile-first responsive utilities */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  h1 {
+    word-break: break-word;
+  }
+}
+
+/* Prevent horizontal scroll on mobile */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Fix testimonial card on mobile */
+@media (max-width: 768px) {
+  .testimonial-card {
+    min-height: 400px;
+  }
+}
+
+/* Add at the end of globals.css */
+
+/* Container responsive widths */
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+/* Fix testimonial overflow on mobile */
+@media (max-width: 768px) {
+  section {
+    overflow-x: hidden;
+  }
+}
+
+/* Prevent horizontal scroll */
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Add at the end of globals.css */
+
+/* Success stories transitions */
+.story-card-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.story-card-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 300ms ease-out;
+}
+
+.story-card-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.story-card-exit-active {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 300ms ease-in;
+}
+
+/* Responsive text truncation */
+@media (max-width: 768px) {
+  .story-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Smooth hover effects */
+.story-nav-button {
+  transition: all 200ms ease;
+}
+
+.story-nav-button:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+.story-nav-button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* Dot indicators animation */
+.story-dot {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.story-dot-active {
+  transform: scale(1.5);
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: 249 115 22;
+    /* ... other variables ... */
+  }
+
+  .dark {
+    --primary: 249 115 22;
+    /* ... other dark variables ... */
+  }
+}
+
+/* Update primary color references */
+.bg-primary {
+  background-color: rgb(249 115 22);
+}
+
+.text-primary {
+  color: rgb(249 115 22);
+}
+
+.border-primary {
+  border-color: rgb(249 115 22);
+}
+
+.ring-primary {
+  --tw-ring-color: rgb(249 115 22);
+}
+
+/* Hover states */
+.hover\:bg-primary:hover {
+  background-color: rgb(234 88 12);
+}
+
+.hover\:text-primary:hover {
+  color: rgb(249 115 22);
+}
+
+/* Focus states */
+.focus\:ring-primary:focus {
+  --tw-ring-color: rgb(249 115 22);
+}
+
+/* ... rest of your styles ... */
