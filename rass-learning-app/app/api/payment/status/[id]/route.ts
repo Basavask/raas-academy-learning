@@ -5,17 +5,19 @@ import { prisma } from '@/lib/db/prisma'
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+  const { id } = await params
+
 
     const payment = await prisma.payment.findFirst({
       where: {
-        razorpayPaymentId: params.id,
+        razorpayPaymentId: id,
         userId: session.user.id
       }
     })
@@ -29,6 +31,7 @@ export async function GET(
       courseId: payment.courseId
     })
   } catch (error) {
+    console.error('An error occurred. Please try again.' + (error instanceof Error ? ` ${error.message}` : ''))
     return NextResponse.json({ error: 'Failed to get payment status' }, { status: 500 })
   }
 }

@@ -2,10 +2,18 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth/config'
 import { prisma } from '@/lib/db/prisma'
-import { razorpay } from '@/lib/razorpay'
 
 export async function POST(req: NextRequest) {
   try {
+    // Check if Razorpay keys are configured
+    if (!process.env.RAZORPAY_KEY_SECRET || !process.env.RAZORPAY_KEY_SECRET) {
+      return NextResponse.json({ 
+        error: 'Payment service not configured' 
+      }, { status: 503 })
+    }
+
+    const { razorpay } = await import('@/lib/razorpay')
+
     const session = await getServerSession(authOptions)
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -57,6 +65,9 @@ export async function POST(req: NextRequest) {
       currency: order.currency
     })
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })
+    console.error('Payment retry error:', error)
+    return NextResponse.json({ 
+      error: 'Failed to create order' 
+    }, { status: 500 })
   }
 }

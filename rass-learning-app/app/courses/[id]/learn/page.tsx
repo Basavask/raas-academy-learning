@@ -4,19 +4,20 @@ import { notFound, redirect } from 'next/navigation'
 import { LearningLayout } from '@/components/learning/learning-layout'
 
 interface LearnPageProps {
-  params: { id: string }
-  searchParams: { module?: string }
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ module?: string }>
 }
 
 export default async function LearnPage({ params, searchParams }: LearnPageProps) {
   const session = await requireAuth()
-  
+  const { id } = await params
+  const { module } = await searchParams
   // Check enrollment
   const enrollment = await prisma.enrollment.findUnique({
     where: {
       userId_courseId: {
         userId: session.user.id,
-        courseId: params.id,
+        courseId: id,
       }
     },
     include: {
@@ -31,10 +32,10 @@ export default async function LearnPage({ params, searchParams }: LearnPageProps
   })
 
   if (!enrollment) {
-    redirect(`/courses/${params.id}`)
+    redirect(`/courses/${id}`)
   }
 
-  const currentModuleId = searchParams.module || enrollment.course.modules[0]?.id
+  const currentModuleId = module || enrollment.course.modules[0]?.id
   const currentModule = enrollment.course.modules.find(m => m.id === currentModuleId)
 
   if (!currentModule) {

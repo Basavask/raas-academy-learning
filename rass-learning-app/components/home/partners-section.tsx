@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 const partners = [
   { name: 'IIT Delhi', logo: '/partners/iit-delhi.png' },
   { name: 'IIM Mumbai', logo: '/partners/iim-mumbai.png' },

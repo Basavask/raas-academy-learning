@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import NProgress from 'nprogress'
 
@@ -10,30 +10,20 @@ if (typeof window !== 'undefined') {
     minimum: 0.3,
     easing: 'ease',
     speed: 800,
-    showSpinner: true, // Enable spinner for better visibility
+    showSpinner: true,
     trickle: true,
     trickleSpeed: 200,
   })
 }
 
-export function GlobalLoader() {
+function GlobalLoaderInner() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
   useEffect(() => {
-    // Start progress when route starts changing
-    const handleStart = () => NProgress.start()
-    const handleComplete = () => NProgress.done()
-
-    // Listen to route changes
-    handleComplete()
-
-    return () => {
-      handleComplete()
-    }
+    NProgress.done()
   }, [pathname, searchParams])
 
-  // Add click listeners to all links
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement
@@ -52,4 +42,12 @@ export function GlobalLoader() {
   }, [])
 
   return null
+}
+
+export function GlobalLoader() {
+  return (
+    <Suspense fallback={null}>
+      <GlobalLoaderInner />
+    </Suspense>
+  )
 }

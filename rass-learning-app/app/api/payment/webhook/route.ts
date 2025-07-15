@@ -43,9 +43,9 @@ export async function POST(req: NextRequest) {
   }
 }
 
-async function handlePaymentCaptured(payment: any) {
+async function handlePaymentCaptured(payment: Record<string, unknown>) {
   const paymentRecord = await prisma.payment.findUnique({
-    where: { razorpayPaymentId: payment.id }
+    where: { razorpayPaymentId: payment.id as string }
   })
 
   if (!paymentRecord) {
@@ -63,16 +63,16 @@ async function handlePaymentCaptured(payment: any) {
   // await sendEnrollmentConfirmation(paymentRecord.userId, paymentRecord.courseId)
 }
 
-async function handlePaymentFailed(payment: any) {
+async function handlePaymentFailed(payment: Record<string, unknown>) {
   await prisma.payment.update({
-    where: { razorpayPaymentId: payment.id },
+    where: { razorpayPaymentId: payment.id as string },
     data: { status: 'FAILED' }
   })
 }
 
-async function handleRefundCreated(refund: any) {
+async function handleRefundCreated(refund: Record<string, unknown>) {
   await prisma.payment.update({
-    where: { razorpayPaymentId: refund.payment_id },
+    where: { razorpayPaymentId: refund.payment_id as string },
     data: { status: 'REFUNDED' }
   })
 }

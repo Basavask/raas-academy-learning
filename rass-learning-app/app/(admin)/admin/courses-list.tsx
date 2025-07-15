@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Edit, Eye, Trash2 } from 'lucide-react'
+import { Edit, Eye } from 'lucide-react'
 
 interface CoursesListProps {
   courses: (Course & { _count: { enrollments: number } })[]

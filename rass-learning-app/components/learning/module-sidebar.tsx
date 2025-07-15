@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { CourseModule } from '@prisma/client'
 import { cn } from '@/lib/utils/cn'
 import { CheckCircle, PlayCircle, Lock } from 'lucide-react'
@@ -17,7 +16,6 @@ export function ModuleSidebar({
   completedModules,
   courseId
 }: ModuleSidebarProps) {
-  const router = useRouter()
 
   const getModuleIcon = (module: CourseModule, index: number) => {
     if (completedModules.includes(module.id)) {

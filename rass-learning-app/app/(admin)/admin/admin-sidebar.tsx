@@ -9,7 +9,6 @@ import {
   Users, 
   DollarSign, 
   Settings,
-  FileText,
   BarChart
 } from 'lucide-react'
 

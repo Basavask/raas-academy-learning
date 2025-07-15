@@ -27,7 +27,8 @@ export async function getUserByEmail(email: string): Promise<SafeUser | null> {
   
   if (!user) return null
   
-  const { password, ...safeUser } = user
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password: _password, ...safeUser } = user
   return safeUser
 }
 
@@ -146,7 +147,7 @@ export async function getAdminStats() {
     }),
   ])
   
-  const totalRevenue = payments.reduce((sum:any, payment:any) => sum + payment.amount, 0)
+  const totalRevenue = payments.reduce((sum: unknown, payment: unknown) => (sum as number) + (payment as { amount: number }).amount, 0)
   
   const recentEnrollments = await prisma.enrollment.findMany({
     take: 5,
@@ -212,7 +213,7 @@ export async function getStudentStats(userId: string) {
   })
   
   const enrolledCourses = enrollments.length
-  const completedCourses = enrollments.filter((e:any) => e.completedAt).length
+  const completedCourses = enrollments.filter((e) => e.completedAt).length
   const inProgressCourses = enrolledCourses - completedCourses
   
   const payments = await prisma.payment.findMany({
@@ -223,7 +224,7 @@ export async function getStudentStats(userId: string) {
     select: { amount: true },
   })
   
-  const totalSpent = payments.reduce((sum:any, payment:any) => sum + payment.amount, 0)
+  const totalSpent = payments.reduce((sum: unknown, payment: unknown) => (sum as number) + (payment as { amount: number }).amount, 0)
   
   const recentActivity = await prisma.enrollment.findMany({
     where: { userId },

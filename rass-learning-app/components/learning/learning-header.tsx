@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { Course } from '@prisma/client'
-import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { Menu, X } from 'lucide-react'
+import { Menu } from 'lucide-react'
 
 interface LearningHeaderProps {
   course: Course

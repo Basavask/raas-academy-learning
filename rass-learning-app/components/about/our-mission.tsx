@@ -18,8 +18,8 @@ export function OurMission() {
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
               To democratize tech education and create a diverse talent pool that can contribute to 
-              India's growing digital economy. We believe that talent is evenly distributed, but 
-              opportunities are not - and we're here to bridge that gap.
+              India&apos;s growing digital economy. We believe that talent is evenly distributed, but 
+              opportunities are not - and we&apos;re here to bridge that gap.
             </p>
             <div className="space-y-4">
               <div className="flex items-start gap-4">

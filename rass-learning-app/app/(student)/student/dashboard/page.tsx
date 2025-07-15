@@ -24,8 +24,7 @@ export default async function StudentDashboard() {
     })
   ])
 
-  const inProgressCourses = enrollments.filter((e:any) => !e.completedAt && e.progress > 0)
-  const recentEnrollments = enrollments.slice(0, 3)
+  const inProgressCourses = enrollments.filter((e: typeof enrollments[number]) => !e.completedAt && e.progress > 0)
 
   return (
     <div className="container mx-auto px-4 py-8">

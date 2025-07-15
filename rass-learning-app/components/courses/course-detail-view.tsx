@@ -61,16 +61,21 @@ export function CourseDetailView({ course, isEnrolled, isAuthenticated }: Course
                 name: 'RASS Learning',
                 description: `Enrollment for ${course.title}`,
                 order_id: order.id,
-                handler: async function (response: any) {
+                handler: async function (response: unknown) {
                     try {
+                        const r = response as {
+                          razorpay_order_id: string;
+                          razorpay_payment_id: string;
+                          razorpay_signature: string;
+                        }
                         // Verify payment
                         const verifyResponse = await fetch('/api/payment/verify', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                razorpay_order_id: response.razorpay_order_id,
-                                razorpay_payment_id: response.razorpay_payment_id,
-                                razorpay_signature: response.razorpay_signature,
+                                razorpay_order_id: r.razorpay_order_id,
+                                razorpay_payment_id: r.razorpay_payment_id,
+                                razorpay_signature: r.razorpay_signature,
                                 courseId: course.id
                             })
                         })
@@ -81,7 +86,7 @@ export function CourseDetailView({ course, isEnrolled, isAuthenticated }: Course
 
                         toast.success('Payment successful! You are now enrolled.')
                         router.push(`/courses/${course.id}/learn`)
-                    } catch (error) {
+                    } catch {
                         toast.error('Payment verification failed')
                     }
                 },
@@ -95,9 +100,10 @@ export function CourseDetailView({ course, isEnrolled, isAuthenticated }: Course
                 }
             }
 
-            const paymentObject = new (window as any).Razorpay(options)
-            paymentObject.open()
-        } catch (error) {
+            const RazorpayConstructor = (window as unknown as { Razorpay: new (options: object) => unknown }).Razorpay;
+            const paymentObject = new RazorpayConstructor(options);
+            (paymentObject as unknown as { open: () => void }).open()
+        } catch {
             toast.error('Failed to initiate payment')
         } finally {
             setIsProcessing(false)

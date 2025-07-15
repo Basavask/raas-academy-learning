@@ -6,15 +6,15 @@ import { checkEnrollment } from '@/lib/db/utils'
 import { CourseDetailView } from '@/components/courses/course-detail-view'
 
 interface CourseDetailPageProps {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export default async function CourseDetailPage({ params }: CourseDetailPageProps) {
   const session = await getServerSession(authOptions)
-  
+  const { id } = await params;
   const course = await prisma.course.findUnique({
     where: { 
-      id: params.id,
+      id,
       isLive: true
     },
     include: {

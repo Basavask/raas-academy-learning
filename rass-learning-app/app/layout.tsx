@@ -9,6 +9,7 @@ import { Header } from '@/components/common/header'
 import { Footer } from '@/components/common/footer'
 import { GlobalLoader } from '@/components/common/global-loader'
 import { Toaster } from 'react-hot-toast'
+import { Suspense } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,9 +34,13 @@ export default function RootLayout({
               enableSystem={false}
               storageKey="rass-theme"
             >
-              <GlobalLoader />
+              <Suspense fallback={null}>
+                <GlobalLoader />
+              </Suspense>
               <div className="flex min-h-screen flex-col">
-                <Header />
+                <Suspense fallback={<div className="h-16 bg-white dark:bg-gray-900" />}>
+                  <Header />
+                </Suspense>
                 <main className="flex-1">{children}</main>
                 <Footer />
               </div>

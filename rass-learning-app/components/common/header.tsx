@@ -7,7 +7,7 @@ import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils/cn'
 import { Menu, X, User, LogOut, LayoutDashboard } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from '@/hooks/use-route-loading'
 

@@ -7,8 +7,9 @@ import path from 'path'
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
   try {
     const session = await getServerSession(authOptions)
     if (!session || session.user.role !== 'ADMIN') {
@@ -29,7 +30,7 @@ export async function PUT(
     if (imageFile && imageFile.size > 0) {
       // Delete old image if exists
       const oldCourse = await prisma.course.findUnique({
-        where: { id: params.id },
+        where: { id },
         select: { imageUrl: true }
       })
 
@@ -51,7 +52,7 @@ export async function PUT(
     }
 
     const course = await prisma.course.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         title,
         description,
@@ -75,8 +76,9 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
   try {
     const session = await getServerSession(authOptions)
     if (!session || session.user.role !== 'ADMIN') {
@@ -85,7 +87,7 @@ export async function DELETE(
 
     // Delete course image if exists
     const course = await prisma.course.findUnique({
-      where: { id: params.id },
+      where: { id },
       select: { imageUrl: true }
     })
 
@@ -98,7 +100,7 @@ export async function DELETE(
     }
 
     await prisma.course.delete({
-      where: { id: params.id }
+      where: { id }
     })
 
     return NextResponse.json({ success: true })

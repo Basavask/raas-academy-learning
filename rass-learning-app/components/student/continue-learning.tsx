@@ -20,7 +20,7 @@ export function ContinueLearning({ courses }: ContinueLearningProps) {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {courses.map((enrollment:any) => (
+          {courses.map((enrollment: EnrollmentWithCourse) => (
             <div
               key={enrollment.id}
               className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg"

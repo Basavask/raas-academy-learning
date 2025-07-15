@@ -36,7 +36,7 @@ export function CourseDetails({ course }: CourseDetailsProps) {
 
       toast.success(course.isLive ? 'Course unpublished' : 'Course published!')
       router.refresh()
-    } catch (error) {
+    } catch {
       toast.error('Failed to update course status')
     } finally {
       setIsPublishing(false)
@@ -56,7 +56,7 @@ export function CourseDetails({ course }: CourseDetailsProps) {
 
       toast.success('Course deleted successfully')
       router.push('/admin/courses')
-    } catch (error) {
+    } catch {
       toast.error('Failed to delete course')
     } finally {
       setIsDeleting(false)
@@ -172,7 +172,7 @@ export function CourseDetails({ course }: CourseDetailsProps) {
             </Button>
           </CardHeader>
           <CardContent>
-            <ModulesList courseId={course.id} modules={course.modules} />
+            <ModulesList modules={course.modules} />
           </CardContent>
         </Card>
       </div>
