@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, data: enrollment })
   } catch (error) {
+    console.error('An error occurred. Please try again.' + (error instanceof Error ? ` ${error.message}` : ''))
     return NextResponse.json({ error: 'Failed to enroll' }, { status: 500 })
   }
 }

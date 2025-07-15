@@ -29,9 +29,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
     }
 
-    // Update payment record
+    // Find payment by razorpayOrderId (not unique)
+    const paymentRecord = await prisma.payment.findFirst({
+      where: { razorpayOrderId: razorpay_order_id }
+    })
+    if (!paymentRecord) {
+      return NextResponse.json({ error: 'Payment not found' }, { status: 404 })
+    }
+    // Update payment record by id (unique)
     const payment = await prisma.payment.update({
-      where: { razorpayOrderId: razorpay_order_id },
+      where: { id: paymentRecord.id },
       data: {
         razorpayPaymentId: razorpay_payment_id,
         status: 'SUCCESS'

@@ -5,13 +5,14 @@ import { prisma } from '@/lib/db/prisma'
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+    const { id } = await params
 
     const { progress } = await req.json()
 
@@ -19,7 +20,7 @@ export async function PUT(
       where: {
         userId_courseId: {
           userId: session.user.id,
-          courseId: params.id
+          courseId: id
         }
       },
       data: {
@@ -30,6 +31,7 @@ export async function PUT(
 
     return NextResponse.json({ success: true, data: enrollment })
   } catch (error) {
+    console.error('An error occurred. Please try again.' + (error instanceof Error ? ` ${error.message}` : ''))
     return NextResponse.json({ error: 'Failed to update progress' }, { status: 500 })
   }
 }

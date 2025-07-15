@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import Image from 'next/image'
 
 const stories = [
   {
@@ -100,7 +99,7 @@ export function SuccessStories() {
             }`}>
               {/* Quote marks */}
               <div className="absolute top-6 left-6 md:top-10 md:left-10 text-6xl md:text-8xl text-gray-200 dark:text-gray-700 font-serif">
-                "
+                &quot;
               </div>
 
               {/* Story content */}
@@ -131,7 +130,7 @@ export function SuccessStories() {
 
               {/* Quote end mark */}
               <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 text-6xl md:text-8xl text-gray-200 dark:text-gray-700 font-serif transform rotate-180">
-                "
+                &quot;
               </div>
             </Card>
           </div>

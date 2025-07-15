@@ -30,7 +30,7 @@ export function RecentActivity({ activities }: RecentActivityProps) {
           <p className="text-center text-gray-500 py-4">No recent activity</p>
         ) : (
           <div className="space-y-4">
-            {activities.map((activity:any) => {
+            {activities.map((activity: EnrollmentWithCourse) => {
               const Icon = getActivityIcon(activity)
               return (
                 <div key={activity.id} className="flex items-start gap-3">

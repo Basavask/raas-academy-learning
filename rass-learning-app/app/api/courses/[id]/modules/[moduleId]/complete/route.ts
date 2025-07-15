@@ -1,11 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth/config'
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { id: string, moduleId: string } }
-) {
+export async function POST() {
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user?.id) {
@@ -16,6 +13,7 @@ export async function POST(
     // For now, we'll just return success
     return NextResponse.json({ success: true })
   } catch (error) {
+    console.error('An error occurred. Please try again.' + (error instanceof Error ? ` ${error.message}` : ''))
     return NextResponse.json({ error: 'Failed to mark module complete' }, { status: 500 })
   }
 }

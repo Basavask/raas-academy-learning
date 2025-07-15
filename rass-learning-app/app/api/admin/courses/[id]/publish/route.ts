@@ -5,9 +5,10 @@ import { prisma } from '@/lib/db/prisma'
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+  const { id } = await params
     const session = await getServerSession(authOptions)
     if (!session || session.user.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -16,7 +17,7 @@ export async function PUT(
     const { isLive } = await req.json()
 
     const course = await prisma.course.update({
-      where: { id: params.id },
+      where: { id },
       data: { isLive },
     })
 

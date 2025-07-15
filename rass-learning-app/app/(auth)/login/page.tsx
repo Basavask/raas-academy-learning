@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
@@ -22,7 +22,7 @@ const loginSchema = z.object({
 
 type LoginFormData = z.infer<typeof loginSchema>
 
-export default function LoginPage() {
+function LoginFormContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { data: session, status } = useSession()
@@ -68,8 +68,8 @@ export default function LoginPage() {
         toast.success('Login successful! Redirecting...')
         // The useEffect above will handle the redirect
       }
-    } catch (error) {
-      toast.error('An error occurred. Please try again.')
+    } catch (error: unknown) {
+      toast.error('An error occurred. Please try again.' + (error instanceof Error ? ` ${error.message}` : ''))
       setIsLoading(false)
     }
   }
@@ -167,7 +167,7 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter>
           <p className="text-center text-sm text-gray-600 dark:text-gray-400 w-full">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/register" className="font-medium text-primary-500 hover:text-primary-600">
               Sign up
             </Link>
@@ -175,5 +175,17 @@ export default function LoginPage() {
         </CardFooter>
       </Card>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    }>
+      <LoginFormContent />
+    </Suspense>
   )
 }

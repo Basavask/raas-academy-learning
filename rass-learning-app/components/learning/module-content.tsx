@@ -43,7 +43,7 @@ export function ModuleContent({
           router.push(`/courses/${courseId}/learn?module=${nextModuleId}`)
         }, 1000)
       }
-    } catch (error) {
+    } catch {
       toast.error('Failed to mark module as complete')
     } finally {
       setMarking(false)

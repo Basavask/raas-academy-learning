@@ -1,11 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import { useSession } from 'next-auth/react'
-import { useRouter } from '@/hooks/use-route-loading'
 
 const testimonials = [
   {
@@ -13,7 +9,7 @@ const testimonials = [
     name: "Hurmit Grover",
     role: "SSC Aspirant → SDE 1",
     company: "KAPIVA",
-    quote: "The web development program opened new doors. With no coding background, I have landed at Kapiva and there's no looking back.",
+    quote: "The web development program opened new doors. With no coding background, I have landed at Kapiva and there&apos;s no looking back.",
     image: "/testimonials/hurmit.jpg"
   },
   {
@@ -36,8 +32,8 @@ const testimonials = [
 ]
 
 export function HeroSection() {
-  const { data: session } = useSession()
-  const router = useRouter()
+  // const { data: session } = useSession()
+  // const router = useRouter()
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
 
   useEffect(() => {
@@ -46,14 +42,6 @@ export function HeroSection() {
     }, 5000)
     return () => clearInterval(interval)
   }, [])
-
-  const handleGetStarted = () => {
-    if (session) {
-      router.push(session.user.role === 'ADMIN' ? '/admin/dashboard' : '/student/dashboard')
-    } else {
-      router.push('/register')
-    }
-  }
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -69,7 +57,7 @@ export function HeroSection() {
               Starts at RASS.
             </h1>
             <p className="text-xl md:text-2xl text-primary font-medium mb-12">
-              Excel with India's top outcome based platform
+              Excel with India&apos;s top outcome based platform
             </p>
 
             {/* Stats */}
@@ -137,9 +125,10 @@ export function HeroSection() {
                         <Image
                           src={testimonial.image}
                           alt={testimonial.name}
-                          fill
-                          className="object-cover object-top"
-                          priority={index === 0}
+                          width={400}
+                          height={300}
+                          className="object-cover object-top w-full h-full"
+                          priority={index === 0} // (optional, for LCP)
                           onError={(e) => {
                             // Fallback to placeholder if image fails
                             e.currentTarget.style.display = 'none'
@@ -177,11 +166,11 @@ export function HeroSection() {
 
                       {/* Quote - Limited height to prevent overlap */}
                       <blockquote className="text-base md:text-lg leading-relaxed flex-1 max-w-[85%]">
-                        <span className="text-3xl opacity-50">"</span>
+                        <span className="text-3xl opacity-50">&quot;</span>
                         <span className="inline-block px-2">
                           {testimonial.quote}
                         </span>
-                        <span className="text-3xl opacity-50">"</span>
+                        <span className="text-3xl opacity-50">&quot;</span>
                       </blockquote>
                     </div>
                   </div>

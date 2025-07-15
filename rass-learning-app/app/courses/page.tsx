@@ -4,24 +4,25 @@ import { CourseSearch } from '@/components/courses/course-search'
 import { getPublishedCourses } from '@/lib/db/utils'
 
 interface CoursesPageProps {
-  searchParams: {
+  searchParams: Promise<{
     search?: string
     category?: string
     level?: string
     page?: string
-  }
+  }>
 }
 
 export default async function CoursesPage({ searchParams }: CoursesPageProps) {
-  const page = Number(searchParams.page) || 1
+  const { search,category,level, page } = await searchParams
+  const page1 = Number(page) || 1
   const pageSize = 12
 
   const { courses, total } = await getPublishedCourses({
-    skip: (page - 1) * pageSize,
+    skip: (page1 - 1) * pageSize,
     take: pageSize,
-    search: searchParams.search,
-    category: searchParams.category,
-    level: searchParams.level,
+    search: search,
+    category: category,
+    level: level,
   })
 
   const totalPages = Math.ceil(total / pageSize)
@@ -36,7 +37,7 @@ export default async function CoursesPage({ searchParams }: CoursesPageProps) {
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             Discover courses that match your interests and career goals
           </p>
-          <CourseSearch defaultValue={searchParams.search} />
+          <CourseSearch defaultValue={search} />
         </div>
       </div>
 
@@ -44,8 +45,8 @@ export default async function CoursesPage({ searchParams }: CoursesPageProps) {
         <div className="flex flex-col lg:flex-row gap-8">
           <aside className="lg:w-64">
             <CourseFilters 
-              selectedCategory={searchParams.category}
-              selectedLevel={searchParams.level}
+              selectedCategory={category}
+              selectedLevel={level}
             />
           </aside>
           
@@ -58,7 +59,7 @@ export default async function CoursesPage({ searchParams }: CoursesPageProps) {
             
             <CourseGrid 
               courses={courses}
-              currentPage={page}
+              currentPage={page1}
               totalPages={totalPages}
             />
           </main>

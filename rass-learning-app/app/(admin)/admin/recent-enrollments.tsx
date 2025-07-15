@@ -15,7 +15,7 @@ export function RecentEnrollments({ enrollments }: RecentEnrollmentsProps) {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {enrollments.map((enrollment:any) => (
+          {enrollments.map((enrollment: EnrollmentWithDetails) => (
             <div key={enrollment?.id} className="flex items-center space-x-4">
               <Image
                 src={enrollment.user.profileImage || `https://ui-avatars.com/api/?name=${enrollment.user.name}`}

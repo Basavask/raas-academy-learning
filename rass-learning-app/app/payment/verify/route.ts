@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth/config'
 import { prisma } from '@/lib/db/prisma'
+import { Prisma } from '@prisma/client'
 import crypto from 'crypto'
 
 export async function POST(req: NextRequest) {
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Start transaction
-    const result = await prisma.$transaction(async (tx:any) => {
+    const result = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // Check if already processed
       const existingPayment = await tx.payment.findUnique({
         where: { razorpayPaymentId: razorpay_payment_id }
@@ -40,9 +41,16 @@ export async function POST(req: NextRequest) {
         return { alreadyProcessed: true, payment: existingPayment }
       }
 
-      // Update payment record
+      // Find payment by razorpayOrderId (not unique)
+      const paymentRecord = await tx.payment.findFirst({
+        where: { razorpayOrderId: razorpay_order_id }
+      })
+      if (!paymentRecord) {
+        throw new Error('Payment not found')
+      }
+      // Update payment record by id (unique)
       const payment = await tx.payment.update({
-        where: { razorpayOrderId: razorpay_order_id },
+        where: { id: paymentRecord.id },
         data: {
           razorpayPaymentId: razorpay_payment_id,
           status: 'SUCCESS'

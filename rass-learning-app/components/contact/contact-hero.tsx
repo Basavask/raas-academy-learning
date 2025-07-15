@@ -8,7 +8,7 @@ export function ContactHero() {
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
               Have questions about our programs? Want to know more about how we can help transform your career? 
-              We're here to help!
+              We&apos;re here to help!
             </p>
           </div>
         </div>

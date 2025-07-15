@@ -1,7 +1,6 @@
 "use client"
 
 import { useSession } from 'next-auth/react'
-import { useEffect } from 'react'
 import { Loader2 } from 'lucide-react'
 
 export function SessionLoader() {

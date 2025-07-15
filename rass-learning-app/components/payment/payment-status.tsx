@@ -1,13 +1,13 @@
 "use client"
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { CheckCircle, XCircle, Loader2 } from 'lucide-react'
 
-export function PaymentStatus() {
+export function PaymentStatusContentInfo() {
   const searchParams = useSearchParams()
   const [status, setStatus] = useState<'loading' | 'success' | 'failed'>('loading')
   const [courseId, setCourseId] = useState<string>('')
@@ -34,7 +34,7 @@ export function PaymentStatus() {
       } else {
         setStatus('failed')
       }
-    } catch (error) {
+    } catch {
       setStatus('failed')
     }
   }
@@ -97,5 +97,17 @@ export function PaymentStatus() {
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+export function PaymentStatus() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    }>
+      <PaymentStatusContentInfo />
+    </Suspense>
   )
 }

@@ -40,21 +40,20 @@ export default function EditProfilePage() {
   })
 
   useEffect(() => {
-    fetchProfile()
-  }, [])
-
-  const fetchProfile = async () => {
-    try {
-      const response = await fetch('/api/profile')
-      const data = await response.json()
-      if (data.success) {
-        reset(data.data)
-        setProfileImage(data.data.profileImage || '')
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch('/api/profile')
+        const data = await response.json()
+        if (data.success) {
+          reset(data.data)
+          setProfileImage(data.data.profileImage || '')
+        }
+      } catch {
+        toast.error('Failed to load profile')
       }
-    } catch (error) {
-      toast.error('Failed to load profile')
     }
-  }
+    fetchProfile()
+  }, [reset])
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]

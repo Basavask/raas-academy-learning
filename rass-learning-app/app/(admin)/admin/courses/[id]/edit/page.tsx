@@ -4,14 +4,17 @@ import { prisma } from '@/lib/db/prisma'
 import { notFound } from 'next/navigation'
 
 interface EditCoursePageProps {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export default async function EditCoursePage({ params }: EditCoursePageProps) {
   await requireAdmin()
   
+  // Await the params
+  const { id } = await params
+  
   const course = await prisma.course.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       modules: {
         orderBy: { order: 'asc' }

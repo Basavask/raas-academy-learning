@@ -4,15 +4,15 @@ import { notFound } from 'next/navigation'
 import { Invoice } from '@/components/student/invoice'
 
 interface InvoicePageProps {
-  params: { paymentId: string }
+  params: Promise<{ paymentId: string }>
 }
 
 export default async function InvoicePage({ params }: InvoicePageProps) {
   const session = await requireAuth()
-
+  const { paymentId } = await params
   const payment = await prisma.payment.findFirst({
     where: {
-      id: params.paymentId,
+      id: paymentId,
       userId: session.user.id,
       status: 'SUCCESS'
     },

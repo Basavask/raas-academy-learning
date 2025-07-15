@@ -27,6 +27,7 @@ export async function GET() {
 
     return NextResponse.json({ success: true, data: user })
   } catch (error) {
+    console.error('An error occurred. Please try again.' + (error instanceof Error ? ` ${error.message}` : ''))
     return NextResponse.json({ error: 'Failed to fetch profile' }, { status: 500 })
   }
 }
@@ -79,6 +80,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ success: true, data: updatedUser })
   } catch (error) {
     console.error('Profile update error:', error)
+    console.error('An error occurred. Please try again.' + (error instanceof Error ? ` ${error.message}` : ''))
     return NextResponse.json({ error: 'Failed to update profile' }, { status: 500 })
   }
 }

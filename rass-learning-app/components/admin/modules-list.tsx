@@ -7,7 +7,7 @@ interface ModulesListProps {
   modules: CourseModule[]
 }
 
-export function ModulesList({ courseId, modules }: ModulesListProps) {
+export function ModulesList({ modules }: Omit<ModulesListProps, 'courseId'>) {
   if (modules.length === 0) {
     return (
       <p className="text-center text-gray-500 py-8">

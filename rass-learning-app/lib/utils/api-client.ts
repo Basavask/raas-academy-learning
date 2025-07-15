@@ -27,14 +27,14 @@ class ApiClient {
     return this.fetch(url, { method: 'GET' })
   }
 
-  async post(url: string, data?: any) {
+  async post(url: string, data?: unknown) {
     return this.fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
     })
   }
 
-  async put(url: string, data?: any) {
+  async put(url: string, data?: unknown) {
     return this.fetch(url, {
       method: 'PUT',
       body: JSON.stringify(data),

@@ -7,17 +7,17 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Trophy, Download, Share2 } from 'lucide-react'
 
 interface CourseCompletePageProps {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export default async function CourseCompletePage({ params }: CourseCompletePageProps) {
   const session = await requireAuth()
-  
+  const { id } = await params
   const enrollment = await prisma.enrollment.findUnique({
     where: {
       userId_courseId: {
         userId: session.user.id,
-        courseId: params.id,
+        courseId: id,
       }
     },
     include: {
@@ -26,7 +26,7 @@ export default async function CourseCompletePage({ params }: CourseCompletePageP
   })
 
   if (!enrollment || !enrollment.completedAt) {
-    redirect(`/courses/${params.id}/learn`)
+    redirect(`/courses/${id}/learn`)
   }
 
   return (
@@ -41,7 +41,7 @@ export default async function CourseCompletePage({ params }: CourseCompletePageP
               Congratulations! 🎉
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-400">
-              You've successfully completed
+              You&apos;ve successfully completed
             </p>
             <p className="text-xl font-semibold text-primary-500 mt-2">
               {enrollment.course.title}

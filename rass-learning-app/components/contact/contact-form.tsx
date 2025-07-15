@@ -33,14 +33,14 @@ export function ContactForm() {
     resolver: zodResolver(contactSchema),
   })
 
-  const onSubmit = async (data: ContactFormData) => {
+  const onSubmit = async () => {
     setIsSubmitting(true)
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000))
       toast.success('Message sent successfully! We\'ll get back to you soon.')
       reset()
-    } catch (error) {
+    } catch {
       toast.error('Failed to send message. Please try again.')
     } finally {
       setIsSubmitting(false)

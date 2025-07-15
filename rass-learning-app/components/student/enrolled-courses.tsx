@@ -38,7 +38,7 @@ export function EnrolledCourses({ enrollments }: EnrolledCoursesProps) {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {enrollments.map((enrollment:any) => (
+          {enrollments.map((enrollment: EnrollmentWithCourse) => (
             <div
               key={enrollment.id}
               className="flex gap-4 p-4 border rounded-lg hover:shadow-sm transition-shadow"

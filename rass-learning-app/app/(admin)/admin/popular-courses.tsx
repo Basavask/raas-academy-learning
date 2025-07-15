@@ -18,7 +18,7 @@ export function PopularCourses({ courses }: PopularCoursesProps) {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {courses.slice(0, 5).map((course:any) => (
+          {courses.slice(0, 5).map((course: CourseWithDetails) => (
             <div
               key={course?.id}
               className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800"
@@ -28,7 +28,8 @@ export function PopularCourses({ courses }: PopularCoursesProps) {
                   {course?.title}
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {course?._count?.enrollments || 0} students
+                  {/* TODO */}
+                  {/* {course?._count?.enrollments || 0} students */}
                 </p>
               </div>
               <div className="text-right">

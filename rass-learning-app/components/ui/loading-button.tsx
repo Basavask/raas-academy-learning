@@ -1,6 +1,6 @@
 "use client"
 
-import { ButtonHTMLAttributes, forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { Button, ButtonProps } from './button'
 import { Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
