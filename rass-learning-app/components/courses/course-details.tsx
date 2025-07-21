@@ -1,7 +1,7 @@
 import { Card } from '@/components/ui/card'
 import { CheckCircle, Users, Clock, Award, Globe } from 'lucide-react'
 
-export function CourseDetails({ course }: { course: any }) {
+export function CourseDetails({ course }: { course: Course }) {
   const details = [
     { icon: Clock, label: 'Duration', value: course.duration },
     { icon: Users, label: 'Enrolled', value: `${course.enrollments?.length || 0} students` },

@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { Card } from '@/components/ui/card'
 import { Linkedin, Twitter, Globe } from 'lucide-react'
 
-export function InstructorSection({ instructor }: { instructor: any }) {
+export function InstructorSection({ instructor }: { instructor: Instructor }) {
   if (!instructor) return null
 
   return (

@@ -17,9 +17,9 @@ export async function GET(req: NextRequest) {
     }
 
     // Build where clause
-    const where: any = {
+    const where: Record<string, unknown> = {
       isLive: true,
-      AND: []
+      AND: [] as Record<string, unknown>[]
     }
 
     // Search query
@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
 
     // Duration filter
     if (durations.length > 0) {
-      const durationConditions: any[] = []
+      const durationConditions: Record<string, unknown>[] = []
       durations.forEach(duration => {
         if (duration === '< 3 months') {
           durationConditions.push({ duration: { contains: '1 month' } })
@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
 
     // Price range filter
     if (priceRanges.length > 0) {
-      const priceConditions: any[] = []
+      const priceConditions: Record<string, unknown>[] = []
       priceRanges.forEach(range => {
         if (range === 'Free') {
           priceConditions.push({ price: 0 })

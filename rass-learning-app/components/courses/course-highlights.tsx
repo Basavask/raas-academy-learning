@@ -10,7 +10,7 @@ import {
   Calendar
 } from 'lucide-react'
 
-export function CourseHighlights({ course }: { course: any }) {
+export function CourseHighlights() {
   const highlights = [
     {
       icon: Video,

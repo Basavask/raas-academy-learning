@@ -1,7 +1,6 @@
 import { 
     Clock, 
     Code, 
-    Users, 
     Trophy, 
     Layout, 
     HeadphonesIcon,

@@ -1,7 +1,7 @@
 import { Card } from '@/components/ui/card'
 import { CheckCircle } from 'lucide-react'
 
-export function LearningJourney({ course }: { course: any }) {
+export function LearningJourney() {
   const journey = [
     {
       week: 'Week 1-2',

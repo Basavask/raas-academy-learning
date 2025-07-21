@@ -1,6 +1,6 @@
 import { Target } from 'lucide-react'
 
-export function LearningOutcomes({ course }: { course: any }) {
+export function LearningOutcomes({ course }: { course: Course }) {
   const outcomes = course.learningOutcomes || [
     'Master fundamental concepts and advanced techniques',
     'Build real-world projects from scratch',
@@ -14,9 +14,9 @@ export function LearningOutcomes({ course }: { course: any }) {
     <section className="py-16 bg-gray-50 dark:bg-gray-800/50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">What You'll Learn</h2>
+          <h2 className="text-3xl font-bold mb-4">What You&apos;ll Learn</h2>
           <p className="text-lg text-gray-600 dark:text-gray-400">
-            By the end of this course, you'll be able to:
+            By the end of this course, you&apos;ll be able to:
           </p>
         </div>
         

@@ -3,7 +3,7 @@
 import React from "react";
 import { useState, useEffect, Suspense } from 'react'
 import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Search, Filter, Clock, Users, X, Check } from 'lucide-react'
@@ -12,6 +12,21 @@ import Image from 'next/image'
 import { Loader2 } from 'lucide-react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import { cn } from "@/lib/utils/cn";
+
+interface Course {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl?: string;
+  category: string;
+  level: string;
+  price: number;
+  duration: string;
+  slug?: string;
+  _count?: {
+    enrollments: number;
+  };
+}
 
 const categories = [
   'Data Science',
@@ -27,7 +42,6 @@ const categories = [
 ]
 
 const levels = ['Beginner', 'Intermediate', 'Advanced']
-// const durations = ['< 3 months', '3-6 months', '> 6 months']
 const priceRanges = ['Free', '< ₹10,000', '₹10,000 - ₹50,000', '> ₹50,000']
 
 const Checkbox = React.forwardRef<
@@ -51,7 +65,7 @@ const Checkbox = React.forwardRef<
 );
 
 function CoursesContent() {
-  const [courses, setCourses] = useState([])
+  const [courses, setCourses] = useState<Course[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [showFilters, setShowFilters] = useState(true)
@@ -62,13 +76,12 @@ function CoursesContent() {
   // Filter states
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [selectedLevels, setSelectedLevels] = useState<string[]>([])
-  const [selectedDurations, setSelectedDurations] = useState<string[]>([])
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([])
 
   useEffect(() => {
     fetchCourses()
     setCurrentPage(0); // Reset to first page on filter/search change
-  }, [searchQuery, selectedCategories, selectedLevels, selectedDurations, selectedPriceRanges])
+  }, [searchQuery, selectedCategories, selectedLevels, selectedPriceRanges])
 
   const fetchCourses = async () => {
     setLoading(true)
@@ -77,7 +90,6 @@ function CoursesContent() {
         search: searchQuery,
         categories: selectedCategories.join(','),
         levels: selectedLevels.join(','),
-        durations: selectedDurations.join(','),
         priceRanges: selectedPriceRanges.join(',')
       })
       console.log("params", params);
@@ -86,7 +98,7 @@ function CoursesContent() {
         setCourses([]);
         return;
       }
-      const data = await response.json()
+      const data: Course[] = await response.json()
       setCourses(data)
     } catch (error) {
       console.error('Failed to fetch courses:', error)
@@ -111,14 +123,6 @@ function CoursesContent() {
     )
   }
 
-  const toggleDuration = (duration: string) => {
-    setSelectedDurations(prev =>
-      prev.includes(duration)
-        ? prev.filter(d => d !== duration)
-        : [...prev, duration]
-    )
-  }
-
   const togglePriceRange = (priceRange: string) => {
     setSelectedPriceRanges(prev =>
       prev.includes(priceRange)
@@ -130,12 +134,11 @@ function CoursesContent() {
   const clearAllFilters = () => {
     setSelectedCategories([])
     setSelectedLevels([])
-    setSelectedDurations([])
     setSelectedPriceRanges([])
   }
 
   const hasActiveFilters = selectedCategories.length > 0 || selectedLevels.length > 0 || 
-                          selectedDurations.length > 0 || selectedPriceRanges.length > 0
+                          selectedPriceRanges.length > 0
 
   // Pagination logic
   const totalPages = Math.ceil(courses.length / pageSize);
@@ -255,28 +258,6 @@ function CoursesContent() {
                 </div>
               </div>
 
-              {/* Duration */}
-              {/* <div className="mb-6">
-                <h3 className="font-medium mb-3">Duration</h3>
-                <div className="space-y-2">
-                  {durations.map(duration => (
-                    <div key={duration} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={duration}
-                        checked={selectedDurations.includes(duration)}
-                        onCheckedChange={() => toggleDuration(duration)}
-                      />
-                      <Label 
-                        htmlFor={duration} 
-                        className="text-sm font-normal cursor-pointer"
-                      >
-                        {duration}
-                      </Label>
-                    </div>
-                  ))}
-                </div>
-              </div> */}
-
               {/* Price Range */}
               <div className="mb-6">
                 <h3 className="font-medium mb-3">Price Range</h3>
@@ -324,7 +305,7 @@ function CoursesContent() {
             ) : (
               <>
                 <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {Array.isArray(paginatedCourses) ? paginatedCourses.map((course: any) => (
+                  {Array.isArray(paginatedCourses) ? paginatedCourses.map((course: Course) => (
                     <Card key={course.id} className="hover:shadow-lg transition-shadow flex flex-col h-full">
                       <div className="relative h-48 bg-gray-200 dark:bg-gray-700">
                         {course.imageUrl ? (
@@ -398,6 +379,7 @@ function CoursesContent() {
     </div>
   )
 }
+CoursesContent.displayName = 'CoursesContent';
 
 export default function CoursesPage() {
   return (

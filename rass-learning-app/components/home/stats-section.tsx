@@ -12,7 +12,7 @@ export function StatsSection() {
         <p className="text-white/80 mb-2 text-base md:text-lg">Built around your Aspirations.</p>
         <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">Back yourself today. Build a career that lasts a lifetime.</h2>
         <p className="text-white/80 mb-10 md:mb-14 max-w-3xl mx-auto text-base md:text-lg">
-          RAAS Academy empowers you with cutting-edge, career-focused learning through a perfect mix of live instruction, hands-on projects, and expert mentorship. Our personalized upskilling journeys keep you engaged, inspired, and ready to thrive in today's dynamic world.
+          RAAS Academy empowers you with cutting-edge, career-focused learning through a perfect mix of live instruction, hands-on projects, and expert mentorship. Our personalized upskilling journeys keep you engaged, inspired, and ready to thrive in today&apos;s dynamic world.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {statsData.map((stat: Stat) => (

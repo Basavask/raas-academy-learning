@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { Shield, Award } from 'lucide-react'
 
 export function PartnershipSection() {
@@ -14,13 +13,13 @@ export function PartnershipSection() {
             The Gold Standard in Tech Certifications
           </h2>
           <h3 className="text-xl md:text-2xl text-primary mb-8">
-            Delivered in Partnership with NASSCOM's FutureSkills Prime
+            Delivered in Partnership with NASSCOM&apos;s FutureSkills Prime
           </h3>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-4xl mx-auto">
-            As an officially recognized partner of NASSCOM's FutureSkills Prime, 
-            we are committed to building India's next generation of tech talent. 
+            As an officially recognized partner of NASSCOM&apos;s FutureSkills Prime, 
+            we are committed to building India&apos;s next generation of tech talent. 
             Our programs are built upon the official joint framework of the Ministry 
-            of Electronics & IT (MeitY) and NASSCOM's Skill development initiative, 
+            of Electronics & IT (MeitY) and NASSCOM&apos;s Skill development initiative, 
             <strong> empowering</strong> every participant with the elite, industry-validated 
             skills needed to excel professionally.
           </p>
@@ -36,7 +35,7 @@ export function PartnershipSection() {
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-4xl mx-auto">
             Our commitment to revolutionizing education is officially recognized 
-            by the Government of India's Startup India initiative.
+            by the Government of India&apos;s Startup India initiative.
           </p>
         </div>
       </div>

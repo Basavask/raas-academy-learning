@@ -8,6 +8,18 @@ import { ArrowRight, Clock, Users } from 'lucide-react'
 import Image from 'next/image'
 import { COURSE_CATEGORIES } from '@/lib/constants/categories'
 
+interface Course {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  category: string;
+  duration: string;
+  price: number;
+  instructor: string;
+  _count?: { enrollments: number };
+}
+
 const categories = [
   { value: 'all', label: 'All' },
   ...COURSE_CATEGORIES
@@ -15,8 +27,7 @@ const categories = [
 
 export function CoursePreview() {
   const [activeCategory, setActiveCategory] = useState('all')
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
-  const [courses, setCourses] = useState<any[]>([])
+  const [courses, setCourses] = useState<Course[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 3;
@@ -35,6 +46,7 @@ export function CoursePreview() {
         const data = await response.json()
         setCourses(Array.isArray(data) ? data : data.courses || [])
       } catch (error) {
+        console.error('Failed to fetch courses', error)
         setCourses([])
       } finally {
         setLoading(false)
@@ -83,8 +95,6 @@ export function CoursePreview() {
               <Card
                 key={course.id}
                 className="relative h-full hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col cursor-pointer"
-                onMouseEnter={() => setHoveredCard(course.id)}
-                onMouseLeave={() => setHoveredCard(null)}
               >
                 {/* Course Image */}
                 <div className="relative h-48 bg-gray-200 dark:bg-gray-700">

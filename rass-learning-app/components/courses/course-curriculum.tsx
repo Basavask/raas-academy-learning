@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { ChevronDown, ChevronUp, PlayCircle, FileText, Code } from 'lucide-react'
 
-export function CourseCurriculum({ modules }: { modules: any[] }) {
+export function CourseCurriculum({ modules }: { modules: Module[] }) {
   const [expandedModules, setExpandedModules] = useState<number[]>([0])
 
   const toggleModule = (index: number) => {
@@ -55,7 +55,7 @@ export function CourseCurriculum({ modules }: { modules: any[] }) {
                  
                  {module.contents && (
                    <div className="space-y-2">
-                     {module.contents.map((content: any, contentIndex: number) => {
+                     {module.contents.map((content: Content, contentIndex: number) => {
                        const Icon = getContentIcon(content.type)
                        return (
                          <div key={contentIndex} className="flex items-center gap-3 py-2">

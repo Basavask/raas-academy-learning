@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
 export function FAQSection({ courseId }: { courseId: string }) {
-  const [faqs, setFaqs] = useState([])
+  const [faqs, setFaqs] = useState<{ id: number; question: string; answer: string }[]>([])
   const [expandedItems, setExpandedItems] = useState<number[]>([])
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export function FAQSection({ courseId }: { courseId: string }) {
   const fetchFAQs = async () => {
     try {
       const response = await fetch(`/api/courses/${courseId}/faqs`)
-      const data = await response.json()
+      const data: { id: number; question: string; answer: string }[] = await response.json()
       setFaqs(data)
     } catch (error) {
       console.error('Failed to fetch FAQs:', error)
@@ -68,7 +68,7 @@ export function FAQSection({ courseId }: { courseId: string }) {
         </h2>
         
         <div className="max-w-3xl mx-auto space-y-4">
-          {displayFAQs.map((faq: any) => (
+          {displayFAQs.map((faq: { id: number; question: string; answer: string }) => (
             <Card key={faq.id} className="overflow-hidden">
               <button
                 onClick={() => toggleFAQ(faq.id)}

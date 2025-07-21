@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Upload, Image as ImageIcon, Trash2, Eye } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { StrapiService } from '@/lib/strapi';
+import { Image as ImageIcon, Upload } from 'lucide-react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 interface CourseMediaManagerProps {
   courseId: string;
@@ -13,7 +13,7 @@ interface CourseMediaManagerProps {
 }
 
 export function CourseMediaManager({ courseId, courseName }: CourseMediaManagerProps) {
-  const [courseMedia, setCourseMedia] = useState<any>(null);
+  const [courseMedia, setCourseMedia] = useState<unknown>(null);
   const [uploading, setUploading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(true);

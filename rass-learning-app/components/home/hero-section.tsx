@@ -1,12 +1,9 @@
 "use client"
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { useSession } from 'next-auth/react'
 import { useRouter } from '@/hooks/use-route-loading'
-import { Award, Users, Target } from 'lucide-react'
+import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 
 export function HeroSection() {
   const { data: session } = useSession()
@@ -33,7 +30,7 @@ export function HeroSection() {
           
           {/* Subheading */}
           <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto">
-            India's #1 Outcome-Focused Skill Development Initiative
+            India&apos;s #1 Outcome-Focused Skill Development Initiative
           </p>
 
           {/* Stats */}

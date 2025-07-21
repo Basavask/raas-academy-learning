@@ -14,7 +14,7 @@ interface CourseCardProps {
 }
 
 export function CourseCard({ course }: CourseCardProps) {
-  const [courseMedia, setCourseMedia] = useState<any>(null);
+  const [courseMedia, setCourseMedia] = useState<unknown>(null);
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const strapiService = new StrapiService();
@@ -32,7 +32,7 @@ export function CourseCard({ course }: CourseCardProps) {
     };
 
     fetchCourseMedia();
-  }, [course.id]);
+  }, [course.id, strapiService]);
 
   // Get image URL with fallback priority
   const getImageUrl = () => {

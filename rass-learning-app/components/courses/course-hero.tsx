@@ -1,13 +1,11 @@
 "use client"
 
 import { Button } from '@/components/ui/button'
-import { Clock, Users, Award, PlayCircle } from 'lucide-react'
+import { Course } from '@prisma/client'
+import { Award, Clock, PlayCircle, Users } from 'lucide-react'
 import Image from 'next/image'
-import { useState } from 'react'
 
-export function CourseHero({ course }: { course: any }) {
-  const [showVideo, setShowVideo] = useState(false)
-
+export function CourseHero({ course }: { course: Course }) {
   return (
     <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -61,7 +59,6 @@ export function CourseHero({ course }: { course: any }) {
                 size="lg" 
                 variant="outline" 
                 className="border-white text-white hover:bg-white/10"
-                onClick={() => setShowVideo(true)}
               >
                 <PlayCircle className="mr-2 h-5 w-5" />
                 Watch Demo

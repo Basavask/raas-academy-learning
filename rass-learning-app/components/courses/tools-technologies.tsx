@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export function ToolsTechnologies({ course }: { course: any }) {
+export function ToolsTechnologies({ course }: { course: Course }) {
   const tools = course.tools || [
     { name: 'Python', icon: '/tools/python.png' },
     { name: 'TensorFlow', icon: '/tools/tensorflow.png' },
@@ -16,7 +16,7 @@ export function ToolsTechnologies({ course }: { course: any }) {
         <h2 className="text-3xl font-bold text-center mb-12">Tools & Technologies</h2>
         
         <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
-          {tools.map((tool: any, index: number) => (
+          {tools.map((tool: Tool, index: number) => (
             <div key={index} className="text-center">
               <div className="w-20 h-20 mx-auto mb-3 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
                 {tool.icon ? (

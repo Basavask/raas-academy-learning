@@ -1,13 +1,13 @@
 "use client"
 
-import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { CheckCircle, Calendar, Users, Zap } from 'lucide-react'
+import { Card } from '@/components/ui/card'
+import { Calendar, CheckCircle, Users, Zap } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
-export function FeeRegistration({ course }: { course: any }) {
+export function FeeRegistration({ course }: { course: Course }) {
   const { data: session } = useSession()
   const router = useRouter()
 
@@ -31,6 +31,7 @@ export function FeeRegistration({ course }: { course: any }) {
         toast.success('Redirecting to payment...')
       }
     } catch (error) {
+      console.error('Failed to create order', error)
       toast.error('Failed to create order')
     }
   }

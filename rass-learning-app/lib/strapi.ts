@@ -34,10 +34,10 @@ export class StrapiService {
       }
     }
   
-    getImageUrl(imageData: any) {
+    getImageUrl(imageData: { url?: string; attributes?: { url?: string } } | null) {
       if (!imageData) return null;
       
-      const imageUrl = imageData.url || imageData.attributes?.url;
+      const imageUrl = imageData?.url || imageData?.attributes?.url;
       if (!imageUrl) return null;
       
       return `${this.baseUrl}${imageUrl}`;

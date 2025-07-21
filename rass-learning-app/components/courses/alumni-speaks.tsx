@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react'
 import { Card } from '@/components/ui/card'
 import { Star, Quote } from 'lucide-react'
-import Image from 'next/image'
+import { Review } from '@/types/review'
 
 export function AlumniSpeaks({ courseId }: { courseId: string }) {
-  const [reviews, setReviews] = useState([])
+  const [reviews, setReviews] = useState<Review[]>([])
 
   useEffect(() => {
     // Fetch reviews from API
@@ -16,7 +16,7 @@ export function AlumniSpeaks({ courseId }: { courseId: string }) {
   const fetchReviews = async () => {
     try {
       const response = await fetch(`/api/courses/${courseId}/reviews`)
-      const data = await response.json()
+      const data: Review[] = await response.json()
       setReviews(data)
     } catch (error) {
       console.error('Failed to fetch reviews:', error)
@@ -24,7 +24,7 @@ export function AlumniSpeaks({ courseId }: { courseId: string }) {
   }
 
   // Mock data for now
-  const mockReviews = [
+  const mockReviews: Review[] = [
     {
       id: 1,
       user: {
@@ -68,7 +68,7 @@ export function AlumniSpeaks({ courseId }: { courseId: string }) {
         <h2 className="text-3xl font-bold text-center mb-12">Alumni Speaks</h2>
         
         <div className="grid md:grid-cols-3 gap-8">
-          {displayReviews.map((review: any) => (
+          {displayReviews.map((review: Review) => (
             <Card key={review.id} className="p-6">
               <div className="flex items-center gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
