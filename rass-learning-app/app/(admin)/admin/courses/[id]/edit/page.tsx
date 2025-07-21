@@ -1,4 +1,5 @@
 import { CourseEditForm } from '@/components/admin/course-edit-form'
+import { CourseMediaManager } from '@/components/admin/course-media-manager'
 import { requireAdmin } from '@/lib/auth/guard'
 import { prisma } from '@/lib/db/prisma'
 import { notFound } from 'next/navigation'
@@ -32,6 +33,10 @@ export default async function EditCoursePage({ params }: EditCoursePageProps) {
         Edit Course
       </h1>
       <CourseEditForm course={course} />
+      <CourseMediaManager 
+        courseId={id}
+        courseName="Course Name Here" 
+      />
     </div>
   )
 }

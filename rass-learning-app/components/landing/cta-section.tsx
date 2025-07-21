@@ -9,7 +9,7 @@ export function CTASection() {
           Ready to Start Your Learning Journey?
         </h2>
         <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-          Join thousands of learners who are already advancing their careers with RASS Learning.
+          Join thousands of learners who are already advancing their careers with RAAS Learning.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 

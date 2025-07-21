@@ -1,12 +1,13 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
-  darkMode: 'class',
+  darkMode: ["class"],
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+	],
   theme: {
     container: {
       center: true,
@@ -23,47 +24,32 @@ const config: Config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "rgb(249 115 22)",
-          50: "rgb(255 247 237)",
-          100: "rgb(255 237 213)",
-          200: "rgb(254 215 170)",
-          300: "rgb(253 186 116)",
-          400: "rgb(251 146 60)",
-          500: "rgb(249 115 22)",
-          600: "rgb(234 88 12)",
-          700: "rgb(194 65 12)",
-          800: "rgb(154 52 18)",
-          900: "rgb(124 45 18)",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "rgb(59, 130, 246)", // Blue from logo
+          50: "rgb(239, 246, 255)",
+          100: "rgb(219, 234, 254)",
+          200: "rgb(191, 219, 254)",
+          300: "rgb(147, 197, 253)",
+          400: "rgb(96, 165, 250)",
+          500: "rgb(59, 130, 246)",
+          600: "rgb(37, 99, 235)",
+          700: "rgb(29, 78, 216)",
+          800: "rgb(30, 64, 175)",
+          900: "rgb(30, 58, 138)",
+          foreground: "rgb(255, 255, 255)",
         },
-          dark: {
-            bg: '#0f172a',
-            card: '#1e293b',
-            text: '#f1f5f9',
-            border: '#334155',
-          }
+        secondary: {
+          DEFAULT: "rgb(0, 0, 0)", // Black from logo
+          foreground: "rgb(255, 255, 255)",
         },
-        animation: {
-          'slide-up': 'slideUp 0.3s ease-out',
-          'slide-down': 'slideDown 0.3s ease-out',
-          'fade-in': 'fadeIn 0.3s ease-out',
+        accent: {
+          DEFAULT: "rgb(147, 197, 253)", // Light blue from logo
+          foreground: "rgb(30, 58, 138)",
         },
-        keyframes: {
-          slideUp: {
-            '0%': { transform: 'translateY(10px)', opacity: '0' },
-            '100%': { transform: 'translateY(0)', opacity: '1' },
-          },
-          slideDown: {
-            '0%': { transform: 'translateY(-10px)', opacity: '0' },
-            '100%': { transform: 'translateY(0)', opacity: '1' },
-          },
-          fadeIn: {
-            '0%': { opacity: '0' },
-            '100%': { opacity: '1' },
-          },
-        },
+        // ... rest of colors
       },
+      // ... rest of config
     },
-    plugins: [require("tailwindcss-animate")],
-  }
+  },
+  plugins: [require("tailwindcss-animate")],
+}
 export default config

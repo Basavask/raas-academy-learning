@@ -13,7 +13,7 @@ export function HeroSection() {
         <div className="container relative mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              Welcome to <span className="text-primary-500">RASS Learning</span>
+              Welcome to <span className="text-primary-500">RAAS Learning</span>
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
               Empower your future with quality education. Learn new skills, advance your career, and achieve your goals with our comprehensive courses.

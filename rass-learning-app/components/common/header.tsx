@@ -54,14 +54,18 @@ export function Header() {
                             <span className="text-white font-bold text-xl">R</span>
                         </div>
                         <span className="text-xl font-bold text-gray-900 dark:text-white">
-                            RASS Learning
+                            RAAS Learning
                         </span>
                     </Link> */}
                     {/* // Update the logo section: */}
                     <Link href="/" className="flex items-center">
-                        <div className="bg-black dark:bg-white rounded-full px-4 py-1.5">
-                            <span className="text-white dark:text-black font-bold text-lg tracking-tight">RASS Learning</span>
-                        </div>
+                        <Image
+                            src="/logo.png" // or "/logo.svg" if you saved as SVG
+                            alt="RAAS Logo"
+                            width={160}      // Adjust width as needed
+                            height={40}      // Adjust height as needed
+                            priority
+                        />
                     </Link>
 
                     {/* Desktop Navigation */}

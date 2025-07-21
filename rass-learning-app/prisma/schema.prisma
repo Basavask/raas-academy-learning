@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url = env("DATABASE_URL")
+  url      = "mysql://avnadmin:AVNS_5Cu5GZrl-cPtWH5mm0E@raas-learning-demo-service-raas-learning-demo.b.aivencloud.com:28825/defaultdb?ssl-mode=REQUIRED"
   relationMode = "prisma"
 }
 

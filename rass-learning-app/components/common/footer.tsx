@@ -12,7 +12,7 @@ export function Footer() {
                 <span className="text-white font-bold text-lg">R</span>
               </div>
               <span className="text-xl font-bold text-gray-900 dark:text-white">
-                RASS Learning
+                RAAS Learning
               </span>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -77,7 +77,7 @@ export function Footer() {
 
         <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800">
           <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-            © {new Date().getFullYear()} RASS Learning. All rights reserved.
+            © {new Date().getFullYear()} RAAS Learning. All rights reserved.
           </p>
         </div>
       </div>

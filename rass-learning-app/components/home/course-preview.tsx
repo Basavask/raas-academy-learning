@@ -1,164 +1,188 @@
 "use client"
 
-import { useState } from 'react'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { useState, useEffect } from 'react'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Clock, Users } from 'lucide-react'
+import Image from 'next/image'
+import { COURSE_CATEGORIES } from '@/lib/constants/categories'
+
+interface Course {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  category: string;
+  duration: string;
+  price: number;
+  instructor: string;
+  _count?: { enrollments: number };
+}
 
 const categories = [
-  'Management',
-  'Marketing', 
-  'AI/ML',
-  'Data Science',
-  'Electronics',
-  'Software Development'
-]
-
-const featuredCourses = [
-  {
-    id: 1,
-    category: 'Management',
-    title: 'Certificate Program in Entrepreneurship and Start Up Mastery',
-    institute: 'IIM Mumbai',
-    logo: '/institutes/iim-mumbai.png',
-    duration: '04 months',
-    mode: 'Online',
-    deadline: '13th Jul 2025',
-    featured: false
-  },
-  {
-    id: 2,
-    category: 'AI/ML',
-    title: 'Product Management and Agentic AI',
-    institute: 'Vishlesan i-Hub IIT Patna',
-    logo: '/institutes/iit-patna.png',
-    duration: '06 months',
-    mode: 'Online',
-    deadline: '13th Jul 2025',
-    featured: true
-  },
-  {
-    id: 3,
-    category: 'Management',
-    title: 'Product Management with Generative & Agentic AI',
-    institute: 'BITS School Of Management',
-    logo: '/institutes/bits.png',
-    duration: '06 months',
-    mode: 'Online',
-    deadline: '13th Jul 2025',
-    featured: false
-  }
-]
+  { value: 'all', label: 'All' },
+  ...COURSE_CATEGORIES
+];
 
 export function CoursePreview() {
-  const [activeCategory, setActiveCategory] = useState('Management')
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+  const [activeCategory, setActiveCategory] = useState('all')
+  const [courses, setCourses] = useState<Course[]>([])
+  const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(0);
+  const pageSize = 3;
 
-  const filteredCourses = featuredCourses.filter(
-    course => course.category === activeCategory || activeCategory === 'All'
-  )
+  // Add more filters if needed (levels, durations, etc.)
+  // For now, just category
+  useEffect(() => {
+    const fetchCourses = async () => {
+      setLoading(true)
+      try {
+        const params = new URLSearchParams()
+        if (activeCategory !== 'all') params.set('categories', activeCategory)
+        // Add more params for other filters if needed
+        console.log("params1", params);
+        const response = await fetch(`/api/courses/search?${params}`)
+        const data = await response.json()
+        setCourses(Array.isArray(data) ? data : data.courses || [])
+      } catch (error) {
+        console.error('Failed to fetch courses', error)
+        setCourses([])
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchCourses()
+  }, [activeCategory])
+
+  const totalPages = Math.ceil(courses.length / pageSize);
+  const paginatedCourses = courses.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
 
   return (
     <section className="py-20 bg-gray-50 dark:bg-gray-800/50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-primary text-lg font-semibold mb-2">Our Courses</h2>
+          <h2 className="text-primary text-lg font-semibold mb-2">Our Certification Courses</h2>
           <h3 className="text-3xl md:text-4xl font-bold">
-            Programs To Help You Upskill
+            From foundational skills to advanced professional mastery.
           </h3>
         </div>
 
-        {/* Category Tabs */}
-        <div className="flex justify-center mb-8">
-          <div className="inline-flex gap-2 p-1 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-            <Button
-              className="rounded-md px-6 bg-primary text-white hover:bg-primary/90"
-            >
-              By Category
-            </Button>
-            {/* <Button variant="ghost" className="rounded-md px-6">
-              By Institute
-            </Button> */}
-          </div>
-        </div>
-
         {/* Category Pills */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map((category) => (
             <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                activeCategory === category
+              key={category.value}
+              onClick={() => setActiveCategory(category.value)}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === category.value
                   ? 'bg-primary text-white shadow-lg transform scale-105'
                   : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
-              }`}
+                }`}
             >
-              {category}
+              {category.label}
             </button>
           ))}
         </div>
 
         {/* Course Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {filteredCourses.map((course) => (
-            <Card 
-              key={course.id} 
-              className={`relative hover:shadow-lg transition-all duration-300 overflow-hidden ${
-                course.featured ? 'ring-2 ring-primary' : ''
-              }`}
-              onMouseEnter={() => setHoveredCard(course.id)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              {/* Hover Overlay */}
-              <div className={`absolute inset-0 bg-primary transition-transform duration-300 ${
-                hoveredCard === course.id ? 'translate-y-0' : 'translate-y-full'
-              }`}>
-                <div className="p-6 text-white h-full flex flex-col justify-between">
-                  <div>
-                    <h4 className="text-xl font-bold mb-4">{course.title}</h4>
-                    <p className="mb-2">Transform your career with cutting-edge curriculum designed by industry experts.</p>
-                  </div>
-                  <Button className="bg-white text-primary hover:bg-gray-100 w-full">
-                    Enroll Now
-                  </Button>
-                </div>
-              </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 items-stretch">
+          {loading ? (
+            <div className="col-span-full text-center">Loading...</div>
+          ) : paginatedCourses.length === 0 ? (
+            <div className="col-span-full text-center text-gray-500">No courses found.</div>
+          ) : (
+            paginatedCourses.map((course) => (
+              <Card
+                key={course.id}
+                className="relative h-full hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col cursor-pointer"
+              >
+                {/* Course Image */}
+                <div className="relative h-48 bg-gray-200 dark:bg-gray-700">
+                  {course.imageUrl ? (
+                    <Image
+                      src={course.imageUrl}
+                      alt={course.title}
+                      fill
+                      className="object-cover rounded-t-lg"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="text-4xl font-bold text-gray-400">
+                        {course.category?.charAt(0) || "C"}
+                      </span>
+                    </div>
+                  )}
 
-              {/* Regular Content */}
-              <CardHeader>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                    <span className="text-xs font-bold">{course.institute.split(' ')[0]}</span>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{course.institute}</p>
+                  {/* Category Badge */}
+                  <div className="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                    {course.category}
                   </div>
                 </div>
-                <h4 className="text-lg font-semibold line-clamp-2">{course.title}</h4>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2 mb-4 text-sm text-gray-600 dark:text-gray-400">
-                  <p>{course.duration} | {course.mode}</p>
-                  <p>Qualifier test - {course.deadline}</p>
-                </div>
-                <div className="flex gap-2">
-                  <Button size="sm" className="flex-1 bg-primary hover:bg-primary/90">
-                    Learn more
-                    <ArrowRight className="ml-1 h-3 w-3" />
-                  </Button>
-                  <Button size="sm" variant="outline" className="flex-1 border-primary text-primary hover:bg-primary hover:text-white">
-                    Enroll
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+
+                <CardContent className="flex flex-col flex-1 p-6">
+                  <h4 className="text-xl font-semibold mb-2 line-clamp-2">{course.title}</h4>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                    {course.description}
+                  </p>
+
+                  <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
+                    <div className="flex items-center gap-1">
+                      <Clock className="h-4 w-4" />
+                      <span>{course.duration}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Users className="h-4 w-4" />
+                      <span>{course._count?.enrollments ?? 0} students</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-auto w-full">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-sm text-gray-600">by {course.instructor || "Instructor"}</p>
+                      <p className="text-2xl font-bold text-primary">₹{course.price?.toLocaleString()}</p>
+                    </div>
+                    <div className="flex gap-2 pt-2">
+                      <Button
+                        size="sm"
+                        className="flex-1"
+                        asChild
+                      >
+                        <Link href={`/courses/${course.id}`}>
+                          View Details
+                          <ArrowRight className="ml-1 h-3 w-3" />
+                        </Link>
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="flex-1 border-primary text-primary hover:bg-primary hover:text-white"
+                      >
+                        Enroll Now
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </div>
+
+
+
+        {/* Pagination Dots */}
+        <div className="flex justify-center gap-2 mt-4">
+          {Array.from({ length: totalPages }).map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentPage(idx)}
+              className={`w-3 h-3 rounded-full ${currentPage === idx ? 'bg-primary' : 'bg-gray-300 dark:bg-gray-600'} transition-all`}
+              aria-label={`Go to page ${idx + 1}`}
+            />
           ))}
         </div>
 
         {/* View All Button */}
-        <div className="text-center">
+        <div className="text-center pt-5">
           <Button size="lg" variant="outline" asChild className="border-primary text-primary hover:bg-primary hover:text-white">
             <Link href="/courses">
               View All Courses
