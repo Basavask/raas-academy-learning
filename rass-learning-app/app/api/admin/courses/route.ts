@@ -48,9 +48,9 @@ export async function POST(request: Request) {
             else resolve(result);
           }
         ).end(buffer);
-      }) as any;
+      });
 
-      imageUrl = uploadResult.secure_url;
+      imageUrl = (uploadResult as { secure_url: string }).secure_url;
     }
 
     const newCourse = await prisma.course.create({
