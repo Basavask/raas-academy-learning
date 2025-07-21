@@ -5,14 +5,14 @@
 
 @layer base {
   :root {
+    --primary: 59 130 246; /* Blue */
+    --primary-foreground: 255 255 255;
+    --secondary: 0 0 0; /* Black */
+    --secondary-foreground: 255 255 255;
+    --accent: 147 197 253; /* Light blue */
+    --accent-foreground: 30 58 138;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-    --primary: 24 95% 53%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 214.3 31.8% 91.4%;
@@ -24,8 +24,8 @@
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 0 0% 95%;
-    --primary: 24 95% 53%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 96 165 250; /* Lighter blue for dark mode */
+    --primary-foreground: 255 255 255;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 0 0% 95%;
     --accent: 217.2 32.6% 17.5%;
@@ -82,7 +82,7 @@
 .course-slider .swiper-button-next,
 .course-slider .swiper-button-prev {
   @apply bg-white dark:bg-gray-800 rounded-full w-12 h-12 shadow-lg;
-  color: #f97316;
+  color: #3c73f3;
 }
 
 .course-slider .swiper-button-next:after,
@@ -287,33 +287,32 @@ body {
 
 /* Update primary color references */
 .bg-primary {
-  background-color: rgb(249 115 22);
+  background-color: rgb(59 130 246);
 }
 
 .text-primary {
-  color: rgb(249 115 22);
+  color: rgb(59 130 246);
 }
 
 .border-primary {
-  border-color: rgb(249 115 22);
+  border-color: rgb(59 130 246);
 }
-
 .ring-primary {
-  --tw-ring-color: rgb(249 115 22);
+  --tw-ring-color: rgb(59 130 246);
 }
 
 /* Hover states */
 .hover\:bg-primary:hover {
-  background-color: rgb(234 88 12);
+  background-color: rgb(59 130 246);
 }
 
 .hover\:text-primary:hover {
-  color: rgb(249 115 22);
+  color: rgb(59 130 246);
 }
 
 /* Focus states */
 .focus\:ring-primary:focus {
-  --tw-ring-color: rgb(249 115 22);
+  --tw-ring-color: rgb(59 130 246);
 }
 
 /* ... rest of your styles ... */

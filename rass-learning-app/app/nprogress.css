@@ -4,14 +4,14 @@
   }
   
   #nprogress .bar {
-    background: rgb(249 115 22) !important; /* Orange color */
+    background: rgb(37,99,255) !important; /* Logo blue color */
     position: fixed;
     z-index: 9999;
     top: 0;
     left: 0;
     width: 100%;
     height: 4px; /* Increased from 3px to 4px */
-    box-shadow: 0 2px 10px rgba(249, 115, 22, 0.5); /* Add glow effect */
+    box-shadow: 0 2px 10px rgba(37,99,255, 0.5); /* Add glow effect */
   }
   
   #nprogress .peg {
@@ -20,7 +20,7 @@
     right: 0px;
     width: 100px;
     height: 100%;
-    box-shadow: 0 0 15px rgb(249 115 22), 0 0 8px rgb(249 115 22);
+    box-shadow: 0 0 15px rgb(37,99,255), 0 0 8px rgb(37,99,255);
     opacity: 1;
     transform: rotate(3deg) translate(0px, -4px);
   }
@@ -39,6 +39,9 @@
   
   /* Dark mode support */
   .dark #nprogress .bar {
-    background: rgb(251 146 60) !important; /* Lighter orange for dark mode */
-    box-shadow: 0 2px 15px rgba(251, 146, 60, 0.7);
+    background: rgb(59,130,246) !important; /* Logo blue for dark mode */
+    box-shadow: 0 2px 15px rgba(59,130,246, 0.7);
+  }
+  .dark #nprogress .peg {
+    box-shadow: 0 0 15px rgb(59,130,246), 0 0 8px rgb(59,130,246);
   }

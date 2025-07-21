@@ -23,13 +23,13 @@ export function Invoice({ payment }: InvoiceProps) {
     <Card className="max-w-2xl mx-auto">
       <CardHeader className="text-center border-b">
         <h1 className="text-2xl font-bold">INVOICE</h1>
-        <p className="text-sm text-gray-600">RASS Learning</p>
+        <p className="text-sm text-gray-600">RAAS Learning</p>
       </CardHeader>
       <CardContent className="p-6">
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
             <h3 className="font-semibold mb-2">From:</h3>
-            <p>RASS Learning</p>
+            <p>RAAS Learning</p>
             <p>Bengaluru, Karnataka</p>
             <p>India</p>
           </div>

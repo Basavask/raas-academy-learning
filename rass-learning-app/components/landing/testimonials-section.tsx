@@ -7,7 +7,7 @@ const testimonials = [
     id: 1,
     name: "Priya Sharma",
     role: "Web Developer",
-    content: "RASS Learning transformed my career. The courses are well-structured and the instructors are amazing!",
+    content: "RAAS Learning transformed my career. The courses are well-structured and the instructors are amazing!",
     rating: 5,
     image: "https://ui-avatars.com/api/?name=Priya+Sharma&background=4f46e5&color=fff"
   },
@@ -15,7 +15,7 @@ const testimonials = [
     id: 2,
     name: "Rahul Verma",
     role: "Data Analyst",
-    content: "The Data Science course helped me land my dream job. Highly recommend RASS Learning!",
+    content: "The Data Science course helped me land my dream job. Highly recommend RAAS Learning!",
     rating: 5,
     image: "https://ui-avatars.com/api/?name=Rahul+Verma&background=10b981&color=fff"
   },

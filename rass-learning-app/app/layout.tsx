@@ -15,7 +15,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'RASS Learning - Learn and Grow',
+  title: 'RAAS Learning - Learn and Grow',
   description: 'Professional Learning Management System',
 }
 
