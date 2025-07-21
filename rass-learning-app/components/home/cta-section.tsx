@@ -15,7 +15,7 @@ export function CTASection() {
         </p>
         <Button 
           size="lg" 
-          variant="secondary"
+          // variant="secondary"
           className="bg-white text-primary hover:bg-gray-100"
           asChild
         >

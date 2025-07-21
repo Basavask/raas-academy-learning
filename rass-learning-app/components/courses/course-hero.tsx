@@ -5,7 +5,12 @@ import { Course } from '@prisma/client'
 import { Award, Clock, PlayCircle, Users } from 'lucide-react'
 import Image from 'next/image'
 
-export function CourseHero({ course }: { course: Course }) {
+type CourseWithEnrollments = Course & {
+  _count?: { enrollments: number };
+  prerequisites?: string[];
+};
+
+export function CourseHero({ course }: { course: CourseWithEnrollments }) {
   return (
     <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -35,7 +40,7 @@ export function CourseHero({ course }: { course: Course }) {
               </div>
               <div className="flex items-center gap-2">
                 <Users className="h-5 w-5" />
-                <span>{course.enrollments.length} enrolled</span>
+                <span>{course._count?.enrollments ?? 0} enrolled</span>
               </div>
               <div className="flex items-center gap-2">
                 <Award className="h-5 w-5" />
@@ -46,9 +51,9 @@ export function CourseHero({ course }: { course: Course }) {
             <div className="flex items-center gap-4 mb-8">
               <div>
                 <p className="text-3xl font-bold">₹{course.price.toLocaleString()}</p>
-                {course.originalPrice && (
+                {course?.price && (
                   <p className="text-sm line-through opacity-70">
-                    ₹{course.originalPrice.toLocaleString()}
+                    ₹{course?.price.toLocaleString()}
                   </p>
                 )}
               </div>
@@ -67,9 +72,9 @@ export function CourseHero({ course }: { course: Course }) {
           </div>
           
           <div className="relative">
-            {course.image ? (
+            {course.imageUrl ? (
               <Image
-                src={course.image}
+                src={course.imageUrl}
                 alt={course.title}
                 width={600}
                 height={400}

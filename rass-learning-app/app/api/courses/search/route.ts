@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
 
     // Search query
     if (search) {
-      where.AND.push({
+      (where.AND as Record<string, unknown>[]).push({
         OR: [
           { title: { contains: search } },
           { description: { contains: search } },
@@ -35,14 +35,14 @@ export async function GET(req: NextRequest) {
 
     // Category filter
     if (categoryFilter) {
-      where.AND.push({
+      (where.AND as Record<string, unknown>[]).push({
         category: categoryFilter
       })
     }
 
     // Level filter
     if (levels.length > 0) {
-      where.AND.push({
+      (where.AND as Record<string, unknown>[]).push({
         level: { in: levels }
       })
     }
@@ -67,7 +67,7 @@ export async function GET(req: NextRequest) {
         }
       })
       if (durationConditions.length > 0) {
-        where.AND.push({ OR: durationConditions })
+        (where.AND as Record<string, unknown>[]).push({ OR: durationConditions })
       }
     }
 
@@ -91,12 +91,12 @@ export async function GET(req: NextRequest) {
         }
       })
       if (priceConditions.length > 0) {
-        where.AND.push({ OR: priceConditions })
+        (where.AND as Record<string, unknown>[]).push({ OR: priceConditions })
       }
     }
 
     // Remove empty AND array if no filters
-    if (where.AND.length === 0) {
+    if ((where.AND as Record<string, unknown>[]).length === 0) {
       delete where.AND
     }
 

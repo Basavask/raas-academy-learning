@@ -9,12 +9,28 @@ import { Clock, Users, BookOpen } from 'lucide-react';
 import { Course } from '@prisma/client';
 import { StrapiService } from '@/lib/strapi';
 
+interface CourseMedia {
+  id: string;
+  featuredImage?: {
+    data?: {
+      attributes?: unknown;
+    };
+  };
+  attributes?: {
+    featuredImage?: {
+      data?: {
+        attributes?: unknown;
+      };
+    };
+  };
+}
+
 interface CourseCardProps {
   course: Course & { _count?: { enrollments: number } }
 }
 
 export function CourseCard({ course }: CourseCardProps) {
-  const [courseMedia, setCourseMedia] = useState<unknown>(null);
+  const [courseMedia, setCourseMedia] = useState<CourseMedia | null>(null);
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const strapiService = new StrapiService();

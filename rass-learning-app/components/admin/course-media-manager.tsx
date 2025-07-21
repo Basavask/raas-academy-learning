@@ -7,13 +7,29 @@ import { Image as ImageIcon, Upload } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+interface CourseMedia {
+  id: string;
+  featuredImage?: {
+    data?: {
+      attributes?: unknown;
+    };
+  };
+  attributes?: {
+    featuredImage?: {
+      data?: {
+        attributes?: unknown;
+      };
+    };
+  };
+}
+
 interface CourseMediaManagerProps {
   courseId: string;
   courseName: string;
 }
 
 export function CourseMediaManager({ courseId, courseName }: CourseMediaManagerProps) {
-  const [courseMedia, setCourseMedia] = useState<unknown>(null);
+  const [courseMedia, setCourseMedia] = useState<CourseMedia | null>(null);
   const [uploading, setUploading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(true);
@@ -134,8 +150,8 @@ export function CourseMediaManager({ courseId, courseName }: CourseMediaManagerP
   const getCurrentImageUrl = () => {
     if (!courseMedia) return null;
     
-    const featuredImage = courseMedia.featuredImage?.data?.attributes || 
-                          courseMedia.attributes?.featuredImage?.data?.attributes;
+    const featuredImage = courseMedia?.featuredImage?.data?.attributes || 
+                          courseMedia?.attributes?.featuredImage?.data?.attributes;
     
     if (featuredImage) {
       return strapiService.getImageUrl(featuredImage);

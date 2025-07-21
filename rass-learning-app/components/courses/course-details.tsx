@@ -1,10 +1,16 @@
 import { Card } from '@/components/ui/card'
+import { Course } from '@prisma/client'
 import { CheckCircle, Users, Clock, Award, Globe } from 'lucide-react'
 
-export function CourseDetails({ course }: { course: Course }) {
+type CourseWithEnrollments = Course & {
+  _count?: { enrollments: number };
+  prerequisites?: string[];
+};
+
+export function CourseDetails({ course }: { course: CourseWithEnrollments }) {
   const details = [
     { icon: Clock, label: 'Duration', value: course.duration },
-    { icon: Users, label: 'Enrolled', value: `${course.enrollments?.length || 0} students` },
+    { icon: Users, label: 'Enrolled', value: `${course._count?.enrollments ?? 0} students` },
     { icon: Award, label: 'Certificate', value: 'Yes, upon completion' },
     { icon: Globe, label: 'Language', value: 'English' },
   ]
@@ -16,14 +22,14 @@ export function CourseDetails({ course }: { course: Course }) {
           <div className="lg:col-span-2">
             <h2 className="text-3xl font-bold mb-6">Course Overview</h2>
             <div className="prose prose-lg max-w-none dark:prose-invert">
-              <p>{course.longDescription || course.description}</p>
+              <p>{course?.description}</p>
             </div>
             
-            {course.prerequisites && (
+            {course?.prerequisites && (
               <div className="mt-8">
                 <h3 className="text-xl font-semibold mb-4">Prerequisites</h3>
                 <ul className="space-y-2">
-                  {course.prerequisites.map((prereq: string, index: number) => (
+                  {course?.prerequisites?.map((prereq: string, index: number) => (
                     <li key={index} className="flex items-start gap-2">
                       <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
                       <span>{prereq}</span>

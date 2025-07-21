@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react";
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -47,22 +47,22 @@ const priceRanges = ['Free', '< ₹10,000', '₹10,000 - ₹50,000', '> ₹50,00
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
->(
-  ({ className, ...props }, ref) => (
-    <CheckboxPrimitive.Root
-      ref={ref}
-      className={cn(
-        "peer h-5 w-5 shrink-0 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 ring-offset-background focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center",
-        className
-      )}
-      {...props}
-    >
-      <CheckboxPrimitive.Indicator className="flex items-center justify-center text-primary">
-        <Check className="h-4 w-4" />
-      </CheckboxPrimitive.Indicator>
-    </CheckboxPrimitive.Root>
-  )
-);
+>(({ className, ...props }, ref) => (
+  <CheckboxPrimitive.Root
+    ref={ref}
+    className={cn(
+      "peer h-5 w-5 shrink-0 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 ring-offset-background focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center",
+      className
+    )}
+    {...props}
+  >
+    <CheckboxPrimitive.Indicator className="flex items-center justify-center text-primary">
+      <Check className="h-4 w-4" />
+    </CheckboxPrimitive.Indicator>
+  </CheckboxPrimitive.Root>
+));
+
+Checkbox.displayName = 'Checkbox';
 
 function CoursesContent() {
   const [courses, setCourses] = useState<Course[]>([])
@@ -78,12 +78,7 @@ function CoursesContent() {
   const [selectedLevels, setSelectedLevels] = useState<string[]>([])
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([])
 
-  useEffect(() => {
-    fetchCourses()
-    setCurrentPage(0); // Reset to first page on filter/search change
-  }, [searchQuery, selectedCategories, selectedLevels, selectedPriceRanges])
-
-  const fetchCourses = async () => {
+  const fetchCourses = useCallback(async () => {
     setLoading(true)
     try {
       const params = new URLSearchParams({
@@ -105,7 +100,12 @@ function CoursesContent() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [searchQuery, selectedCategories, selectedLevels, selectedPriceRanges])
+
+  useEffect(() => {
+    fetchCourses()
+    setCurrentPage(0); // Reset to first page on filter/search change
+  }, [fetchCourses])
 
   const toggleCategory = (category: string) => {
     setSelectedCategories(prev =>
@@ -379,6 +379,7 @@ function CoursesContent() {
     </div>
   )
 }
+
 CoursesContent.displayName = 'CoursesContent';
 
 export default function CoursesPage() {

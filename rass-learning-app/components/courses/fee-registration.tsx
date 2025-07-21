@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { Course } from '@prisma/client'
 import { Calendar, CheckCircle, Users, Zap } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -50,9 +51,9 @@ export function FeeRegistration({ course }: { course: Course }) {
                 <span className="text-4xl font-bold text-primary">
                   ₹{course.price.toLocaleString()}
                 </span>
-                {course.originalPrice && (
+                {course.price && (
                   <span className="text-xl line-through text-gray-400">
-                    ₹{course.originalPrice.toLocaleString()}
+                    ₹{course.price.toLocaleString()}
                   </span>
                 )}
               </div>

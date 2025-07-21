@@ -4,6 +4,19 @@ import { useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { ChevronDown, ChevronUp, PlayCircle, FileText, Code } from 'lucide-react'
 
+interface Content {
+  title: string;
+  type: string;
+  duration?: string;
+}
+
+interface Module {
+  id: string;
+  title: string;
+  description?: string;
+  contents?: Content[];
+}
+
 export function CourseCurriculum({ modules }: { modules: Module[] }) {
   const [expandedModules, setExpandedModules] = useState<number[]>([0])
 
