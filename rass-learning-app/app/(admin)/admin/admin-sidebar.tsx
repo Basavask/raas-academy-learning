@@ -43,6 +43,11 @@ const sidebarItems = [
     href: '/admin/settings',
     icon: Settings,
   },
+  {
+    title: 'Subscribers',
+    href: '/admin/subscribers',
+    icon: Users, // You can change this to a mail icon if you prefer
+  },
 ]
 
 export function AdminSidebar() {

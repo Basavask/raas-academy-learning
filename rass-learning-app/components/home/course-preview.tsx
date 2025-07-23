@@ -62,8 +62,8 @@ export function CoursePreview() {
     <section className="py-20 bg-gray-50 dark:bg-gray-800/50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-primary text-lg font-semibold mb-2">Our Certification Courses</h2>
-          <h3 className="text-3xl md:text-4xl font-bold">
+          <h2 className="text-primary text-2xl md:text-3xl font-extrabold mb-2 tracking-tight">Our Certification Courses</h2>
+          <h3 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             From foundational skills to advanced professional mastery.
           </h3>
         </div>
@@ -74,10 +74,11 @@ export function CoursePreview() {
             <button
               key={category.value}
               onClick={() => setActiveCategory(category.value)}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === category.value
-                  ? 'bg-primary text-white shadow-lg transform scale-105'
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
+              className={`px-6 py-2 rounded-full text-base font-semibold transition-all shadow-sm border border-transparent ${activeCategory === category.value
+                  ? 'bg-primary text-white shadow-lg scale-105'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md border-gray-200 dark:border-gray-700'
                 }`}
+              style={{ minWidth: 120 }}
             >
               {category.label}
             </button>
@@ -85,7 +86,7 @@ export function CoursePreview() {
         </div>
 
         {/* Course Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 items-stretch">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 items-stretch">
           {loading ? (
             <div className="col-span-full text-center">Loading...</div>
           ) : paginatedCourses.length === 0 ? (
@@ -94,16 +95,17 @@ export function CoursePreview() {
             paginatedCourses.map((course) => (
               <Card
                 key={course.id}
-                className="relative h-full hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col cursor-pointer"
+                className="relative h-full hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col cursor-pointer border border-gray-200 dark:border-gray-700 rounded-2xl"
+                style={{ minHeight: 420 }}
               >
                 {/* Course Image */}
-                <div className="relative h-48 bg-gray-200 dark:bg-gray-700">
+                <div className="relative h-48 bg-gray-200 dark:bg-gray-700 rounded-t-2xl overflow-hidden">
                   {course.imageUrl ? (
                     <Image
                       src={course.imageUrl}
                       alt={course.title}
                       fill
-                      className="object-cover rounded-t-lg"
+                      className="object-cover"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
@@ -114,14 +116,14 @@ export function CoursePreview() {
                   )}
 
                   {/* Category Badge */}
-                  <div className="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide shadow">
                     {course.category}
                   </div>
                 </div>
 
                 <CardContent className="flex flex-col flex-1 p-6">
-                  <h4 className="text-xl font-semibold mb-2 line-clamp-2">{course.title}</h4>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                  <h4 className="text-xl font-bold mb-2 line-clamp-2 text-gray-900 dark:text-white">{course.title}</h4>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2 text-base">
                     {course.description}
                   </p>
 
@@ -139,23 +141,23 @@ export function CoursePreview() {
                   <div className="mt-auto w-full">
                     <div className="flex items-center justify-between mb-2">
                       <p className="text-sm text-gray-600">by {course.instructor || "Instructor"}</p>
-                      <p className="text-2xl font-bold text-primary">₹{course.price?.toLocaleString()}</p>
+                      <p className="text-2xl font-extrabold text-primary">₹{course.price?.toLocaleString()}</p>
                     </div>
-                    <div className="flex gap-2 pt-2">
+                    <div className="flex gap-2 pt-2 w-full min-w-0">
                       <Button
-                        size="sm"
-                        className="flex-1"
+                        size="lg"
+                        className="flex-1 font-semibold text-base py-2 min-w-0 overflow-hidden"
                         asChild
                       >
-                        <Link href={`/courses/${course.id}`}>
+                        <Link href={`/courses/${course.id}`} className="w-full flex items-center justify-center min-w-0 overflow-hidden whitespace-nowrap">
                           View Details
-                          <ArrowRight className="ml-1 h-3 w-3" />
+                          <ArrowRight className="ml-1 h-4 w-4 flex-shrink-0" />
                         </Link>
                       </Button>
                       <Button
-                        size="sm"
+                        size="lg"
                         variant="outline"
-                        className="flex-1 border-primary text-primary hover:bg-primary hover:text-white"
+                        className="flex-1 border-primary text-primary font-semibold text-base py-2 hover:bg-primary hover:text-white min-w-0"
                       >
                         Enroll Now
                       </Button>
@@ -166,8 +168,6 @@ export function CoursePreview() {
             ))
           )}
         </div>
-
-
 
         {/* Pagination Dots */}
         <div className="flex justify-center gap-2 mt-4">
@@ -183,10 +183,10 @@ export function CoursePreview() {
 
         {/* View All Button */}
         <div className="text-center pt-5">
-          <Button size="lg" variant="outline" asChild className="border-primary text-primary hover:bg-primary hover:text-white">
+          <Button size="lg" variant="outline" asChild className="border-primary text-primary hover:bg-primary hover:text-white font-semibold text-base px-8 py-3">
             <Link href="/courses">
               View All Courses
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>

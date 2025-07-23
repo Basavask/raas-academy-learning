@@ -15,8 +15,7 @@ export function CTASection() {
         </p>
         <Button 
           size="lg" 
-          // variant="secondary"
-          className="bg-white text-primary hover:bg-gray-100"
+          className="bg-white text-primary hover:bg-gray-100 dark:bg-primary-700 dark:text-white dark:hover:bg-primary-800 border-0"
           asChild
         >
           <Link href="/hire-from-us">
