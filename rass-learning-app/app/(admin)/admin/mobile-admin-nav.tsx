@@ -21,6 +21,7 @@ const sidebarItems = [
   { title: 'Enrollments', href: '/admin/enrollments', icon: DollarSign },
   { title: 'Reports', href: '/admin/reports', icon: BarChart },
   { title: 'Settings', href: '/admin/settings', icon: Settings },
+  { title: 'Subscribers', href: '/admin/subscribers', icon: Users }, // You can change this to a mail icon if you prefer
 ]
 
 export function MobileAdminNav() {
