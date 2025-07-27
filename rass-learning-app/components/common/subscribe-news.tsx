@@ -1,6 +1,5 @@
 "use client"
 import { useState } from 'react'
-import Image from 'next/image'
 
 export function SubscribeNews() {
   const [email, setEmail] = useState('')
@@ -40,14 +39,13 @@ export function SubscribeNews() {
 
   return (
     <section className="w-full flex justify-center py-16 bg-transparent">
-      <div className="w-full max-w-6xl bg-gray-100 dark:bg-gray-800 rounded-2xl flex flex-col md:flex-row overflow-hidden shadow-lg">
-        {/* Left */}
-        <div className="flex-1 flex flex-col justify-center p-8 md:p-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white">Subscribe for Career – Boosting Insights!</h2>
-          <form className="flex flex-col sm:flex-row gap-4" onSubmit={handleSubmit}>
+      <div className="w-full max-w-4xl bg-gray-100 dark:bg-gray-800 rounded-2xl p-8 md:p-12 shadow-lg">
+        <div className="text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900 dark:text-white">Subscribe for Career – Boosting Insights!</h2>
+          <form className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto" onSubmit={handleSubmit}>
             <input
               type="email"
-              className="flex-1 px-4 py-3 rounded-md border border-gray-300 dark:border-gray-700 text-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              className="flex-1 px-4 py-3 rounded-md border border-gray-300 dark:border-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Email Address"
               value={email}
               onChange={e => setEmail(e.target.value)}
@@ -55,7 +53,7 @@ export function SubscribeNews() {
             />
             <button
               type="submit"
-              className="bg-primary-500 hover:bg-primary-600 text-white font-semibold px-8 py-3 rounded-md text-lg transition"
+              className="bg-primary-500 hover:bg-primary-600 text-white font-semibold px-8 py-3 rounded-md text-base transition"
               disabled={status === 'loading'}
             >
               {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
@@ -63,16 +61,6 @@ export function SubscribeNews() {
           </form>
           {status === 'success' && <p className="text-green-600 mt-4">Thank you for subscribing!</p>}
           {status === 'error' && <p className="text-red-600 mt-4">{error}</p>}
-        </div>
-        {/* Right */}
-        <div className="flex-1 relative min-h-[280px] md:min-h-[360px]">
-          <Image
-            src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800&q=80"
-            alt="People collaborating"
-            fill
-            className="object-cover"
-            priority
-          />
         </div>
       </div>
     </section>

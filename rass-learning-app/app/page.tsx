@@ -7,6 +7,7 @@ import { SuccessStories } from '@/components/home/success-stories'
 import { CTASection } from '@/components/home/cta-section'
 import { StatsSection } from '@/components/home/stats-section'
 import { SubscribeNews } from '@/components/common/subscribe-news'
+import { ScrollToTop } from '@/components/common/scroll-to-top'
 
 export default function HomePage() {
   return (
@@ -34,6 +35,7 @@ export default function HomePage() {
       <div className="border-t border-gray-200 dark:border-gray-700">
         <SubscribeNews />
       </div>
+      <ScrollToTop />
     </main>
   )
 }
