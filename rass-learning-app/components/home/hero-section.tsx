@@ -1,6 +1,5 @@
 "use client"
 
-import { Award, Shield } from 'lucide-react'
 import Image from 'next/image'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -22,7 +21,7 @@ export function HeroSection() {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
           }}
-          autoplay={{ delay: 5000000000000000, disableOnInteraction: false }}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
           className="rounded-xl shadow-lg bg-white/90 dark:bg-gray-900/90"
         >
           {/* Slide 1 */}
@@ -31,7 +30,7 @@ export function HeroSection() {
               {/* Left Content */}
               <div className="flex-1 p-4 md:p-6 lg:p-8 flex flex-col justify-center">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">Become the talent that every company wants to hire</h2>
-                <p className="text-xs md:text-sm text-gray-700 dark:text-gray-300 mb-2">India's #1 Outcome-Focused Skill Development Initiative</p>
+                <p className="text-xs md:text-sm text-gray-700 dark:text-gray-300 mb-2">India&apos;s #1 Outcome-Focused Skill Development Initiative</p>
                 <p className="font-semibold text-xs text-gray-900 dark:text-white mb-3">4/5 alumni landed their dream roles*</p>
                 <button className="bg-primary text-white px-3 py-2 rounded-lg font-semibold text-xs md:text-sm mb-2 w-fit shadow-md hover:bg-primary/90 transition">EXPLORE PROGRAMS →</button>
                 {/* Ratings */}
@@ -55,9 +54,9 @@ export function HeroSection() {
             <div className="flex flex-col md:flex-row items-center min-h-[260px] md:min-h-[320px] lg:min-h-[380px]">
               <div className="flex-1 p-4 md:p-6 lg:p-8 flex flex-col justify-center">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">The Gold Standard in Tech Certifications</h2>
-                <p className="text-xs md:text-sm text-primary mb-2">Delivered in Partnership with NASSCOM's FutureSkills Prime</p>
+                <p className="text-xs md:text-sm text-primary mb-2">Delivered in Partnership with NASSCOM&apos;s FutureSkills Prime</p>
                 <p className="text-xs text-gray-700 dark:text-gray-300 mb-3">
-                  As an officially recognized partner of NASSCOM's FutureSkills Prime, we are committed to building India's next generation of tech talent. Our programs are built upon the official joint framework of the Ministry of Electronics & IT (MeitY) and NASSCOM's Skill development initiative, empowering every participant with the elite, industry-validated skills needed to excel professionally.
+                  As an officially recognized partner of NASSCOM&apos;s FutureSkills Prime, we are committed to building India&apos;s next generation of tech talent. Our programs are built upon the official joint framework of the Ministry of Electronics &amp; IT (MeitY) and NASSCOM&apos;s Skill development initiative, empowering every participant with the elite, industry-validated skills needed to excel professionally.
                 </p>
                 <button className="bg-primary text-white px-3 py-2 rounded-lg font-semibold text-xs md:text-sm mb-2 w-fit shadow-md hover:bg-primary/90 transition">LEARN MORE →</button>
               </div>
@@ -74,7 +73,7 @@ export function HeroSection() {
               <div className="flex-1 p-4 md:p-6 lg:p-8 flex flex-col justify-center">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">An Innovative Approach. Backed by Startup India.</h2>
                 <p className="text-xs text-gray-700 dark:text-gray-300 mb-3">
-                  Our commitment to revolutionizing education is officially recognized by the Government of India's Startup India initiative.
+                  Our commitment to revolutionizing education is officially recognized by the Government of India&apos;s Startup India initiative.
                 </p>
                 <button className="bg-primary text-white px-3 py-2 rounded-lg font-semibold text-xs md:text-sm mb-2 w-fit shadow-md hover:bg-primary/90 transition">GET STARTED →</button>
               </div>
