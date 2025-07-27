@@ -18,11 +18,12 @@ export default function HomePage() {
         <PartnershipSection />
       </div>
       <div className="border-t border-gray-200 dark:border-gray-700">
-        <FeaturesSection />
-      </div>
-      <div className="border-t border-gray-200 dark:border-gray-700">
         <CoursePreview />
       </div>
+      <div className="border-t border-gray-200 dark:border-gray-700">
+        <FeaturesSection />
+      </div>
+     
       <div className="border-t border-gray-200 dark:border-gray-700">
         <StatsSection />
       </div>
