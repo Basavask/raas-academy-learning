@@ -385,3 +385,25 @@ body {
     line-height: 1.4 !important;
   }
 }
+
+/* DPIIT Logo responsive sizing */
+@media (min-width: 1024px) {
+  .dpiit-logo {
+    width: 200px !important;
+    height: 100px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dpiit-logo {
+    width: 120px !important;
+    height: 80px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .dpiit-logo {
+    width: 100px !important;
+    height: 66px !important;
+  }
+}
