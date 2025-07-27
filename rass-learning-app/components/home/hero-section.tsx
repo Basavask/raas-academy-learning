@@ -6,6 +6,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { ImageWithSkeleton } from '@/components/ui/skeleton'
 
 export function HeroSection() {
   return (
@@ -43,9 +44,11 @@ export function HeroSection() {
               </div>
               {/* Right Image */}
               <div className="flex-1 flex items-center justify-center p-4 md:p-6">
-                <div className="relative w-[200px] h-[140px] md:w-[240px] md:h-[160px] lg:w-[300px] lg:h-[200px] max-w-full mx-auto">
-                  <Image src="/images/hero1.svg" alt="Professional" fill className="object-contain rounded-lg shadow-lg" />
-                </div>
+                <ImageWithSkeleton 
+                  src="/images/hero1.svg" 
+                  alt="Professional" 
+                  className="w-[200px] h-[140px] md:w-[240px] md:h-[160px] lg:w-[300px] lg:h-[200px] max-w-full mx-auto"
+                />
               </div>
             </div>
           </SwiperSlide>
@@ -61,9 +64,11 @@ export function HeroSection() {
                 <button className="bg-primary text-white px-4 py-3 rounded-lg font-semibold text-sm md:text-base mb-4 w-fit shadow-md hover:bg-primary/90 transition">LEARN MORE →</button>
               </div>
               <div className="flex-1 flex items-center justify-center p-4 md:p-6">
-                <div className="relative w-[200px] h-[140px] md:w-[240px] md:h-[160px] lg:w-[300px] lg:h-[200px] max-w-full mx-auto">
-                  <Image src="/images/hero1.svg" alt="Tech Certification" fill className="object-contain rounded-lg shadow-lg" />
-                </div>
+                <ImageWithSkeleton 
+                  src="/images/hero1.svg" 
+                  alt="Tech Certification" 
+                  className="w-[200px] h-[140px] md:w-[240px] md:h-[160px] lg:w-[300px] lg:h-[200px] max-w-full mx-auto"
+                />
               </div>
             </div>
           </SwiperSlide>
@@ -71,6 +76,10 @@ export function HeroSection() {
           <SwiperSlide>
             <div className="flex flex-col md:flex-row items-center min-h-[400px] md:min-h-[350px] lg:min-h-[380px]">
               <div className="flex-1 p-4 md:p-6 lg:p-8 flex flex-col justify-center">
+                {/* DPIIT Logo - Moved to the very beginning */}
+                <div className="mb-4">
+                  <Image src="/images/DPIIT_start.jpg" alt="DPIIT Startup India" width={120} height={80} className="dpiit-logo rounded-lg shadow-md" />
+                </div>
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">An Innovative Approach. Backed by Startup India.</h2>
                 <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 mb-4">
                   Our commitment to revolutionizing education is officially recognized by the Government of India&apos;s Startup India initiative.
@@ -78,9 +87,11 @@ export function HeroSection() {
                 <button className="bg-primary text-white px-4 py-3 rounded-lg font-semibold text-sm md:text-base mb-4 w-fit shadow-md hover:bg-primary/90 transition">GET STARTED →</button>
               </div>
               <div className="flex-1 flex items-center justify-center p-4 md:p-6">
-                <div className="relative w-[200px] h-[140px] md:w-[240px] md:h-[160px] lg:w-[300px] lg:h-[200px] max-w-full mx-auto">
-                  <Image src="/images/hero1.svg" alt="Startup India" fill className="object-contain rounded-lg shadow-lg" />
-                </div>
+                <ImageWithSkeleton 
+                  src="/images/hero_startupindia_website.svg" 
+                  alt="Startup India" 
+                  className="w-[200px] h-[140px] md:w-[240px] md:h-[160px] lg:w-[300px] lg:h-[200px] max-w-full mx-auto"
+                />
               </div>
             </div>
           </SwiperSlide>
@@ -95,10 +106,12 @@ export function HeroSection() {
                 <button className="bg-primary text-white px-4 py-3 rounded-lg font-semibold text-sm md:text-base mb-4 w-fit shadow-md hover:bg-primary/90 transition">BROWSE COURSES →</button>
               </div>
               <div className="flex-1 flex items-center justify-center p-4 md:p-6">
-                <div className="relative w-[200px] h-[140px] md:w-[240px] md:h-[160px] lg:w-[300px] lg:h-[200px] max-w-full mx-auto">
-                  <Image src="/images/hero1.svg" alt="Job Ready" fill className="object-contain rounded-lg shadow-lg" />
-                </div>
-              </div>
+                <ImageWithSkeleton 
+                  src="/images/hero1.svg" 
+                  alt="Job Ready" 
+                  className="w-[200px] h-[140px] md:w-[240px] md:h-[160px] lg:w-[300px] lg:h-[200px] max-w-full mx-auto"
+                />
+            </div>
             </div>
           </SwiperSlide>
         </Swiper>
