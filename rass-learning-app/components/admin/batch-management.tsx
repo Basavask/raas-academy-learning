@@ -1,21 +1,12 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
-import { 
-  Plus, 
-  Edit, 
-  Trash2, 
-  Users, 
-  Calendar,
-  Clock,
-  CheckCircle,
-  XCircle
-} from 'lucide-react'
+import { Plus, Edit, Trash2, Users, Calendar, Clock, CheckCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 interface CourseBatch {
@@ -71,11 +62,11 @@ export function BatchManagement({ courseId, courseTitle, batches: initialBatches
     setLoading(true)
     
     try {
-      const url = editingBatch ? '/api/admin/batches' : '/api/admin/batches'
+      const url = editingBatch ? `/api/admin/batches` : `/api/admin/batches`
       const method = editingBatch ? 'PUT' : 'POST'
       const body = editingBatch 
-        ? { id: editingBatch.id, ...formData }
-        : { courseId, ...formData }
+        ? { ...formData, id: editingBatch.id }
+        : formData
 
       const response = await fetch(url, {
         method,
@@ -83,17 +74,21 @@ export function BatchManagement({ courseId, courseTitle, batches: initialBatches
         body: JSON.stringify(body)
       })
 
-      if (response.ok) {
-        toast.success(editingBatch ? 'Batch updated successfully' : 'Batch created successfully')
-        await fetchBatches()
-        setShowForm(false)
-        setEditingBatch(null)
-        setFormData({ batchNumber: '', startDate: '', endDate: '', maxStudents: 50 })
-      } else {
-        const error = await response.json()
-        toast.error(error.error || 'Failed to save batch')
+      if (!response.ok) {
+        throw new Error('Failed to save batch')
       }
-    } catch (error) {
+
+      toast.success(editingBatch ? 'Batch updated successfully!' : 'Batch created successfully!')
+      setShowForm(false)
+      setEditingBatch(null)
+      setFormData({
+        batchNumber: '',
+        startDate: '',
+        endDate: '',
+        maxStudents: 50
+      })
+      fetchBatches()
+    } catch {
       toast.error('Failed to save batch')
     } finally {
       setLoading(false)
@@ -115,18 +110,19 @@ export function BatchManagement({ courseId, courseTitle, batches: initialBatches
     if (!confirm('Are you sure you want to delete this batch?')) return
     
     try {
-      const response = await fetch(`/api/admin/batches?id=${batchId}`, {
-        method: 'DELETE'
+      const response = await fetch(`/api/admin/batches`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: batchId })
       })
 
-      if (response.ok) {
-        toast.success('Batch deleted successfully')
-        await fetchBatches()
-      } else {
-        const error = await response.json()
-        toast.error(error.error || 'Failed to delete batch')
+      if (!response.ok) {
+        throw new Error('Failed to delete batch')
       }
-    } catch (error) {
+
+      toast.success('Batch deleted successfully!')
+      fetchBatches()
+    } catch {
       toast.error('Failed to delete batch')
     }
   }
@@ -139,15 +135,13 @@ export function BatchManagement({ courseId, courseTitle, batches: initialBatches
         body: JSON.stringify({ userId })
       })
 
-      if (response.ok) {
-        const data = await response.json()
-        toast.success(`Student ID generated: ${data.studentId}`)
-        await fetchBatches() // Refresh to show the new student ID
-      } else {
-        const error = await response.json()
-        toast.error(error.error || 'Failed to generate student ID')
+      if (!response.ok) {
+        throw new Error('Failed to generate student ID')
       }
-    } catch (error) {
+
+      toast.success('Student ID generated successfully!')
+      fetchBatches()
+    } catch {
       toast.error('Failed to generate student ID')
     }
   }

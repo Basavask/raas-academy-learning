@@ -6,7 +6,6 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { ImageWithSkeleton } from '@/components/ui/skeleton'
 
 export function HeroSection() {
   return (
@@ -111,6 +110,7 @@ export function HeroSection() {
               </div>
             </div>
           </SwiperSlide>
+          
 
           {/* Slide 4 - Indigo/Purple Theme */}
           <SwiperSlide>

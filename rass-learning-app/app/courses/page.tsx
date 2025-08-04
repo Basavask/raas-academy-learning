@@ -5,8 +5,7 @@ import { useState, useEffect, useCallback, Suspense } from 'react'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
-import { Search, Filter, Clock, Users, X, Check } from 'lucide-react'
+import { Search, Clock, Users, X, Check } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Loader2 } from 'lucide-react'
@@ -65,7 +64,6 @@ function CoursesContent() {
   const [courses, setCourses] = useState<Course[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
-  const [showFilters, setShowFilters] = useState(true)
   // Pagination state
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 6;
