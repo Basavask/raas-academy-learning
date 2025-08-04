@@ -1,6 +1,12 @@
+"use client"
+
 import { Card, CardContent } from '@/components/ui/card'
 import { Star } from 'lucide-react'
 import Image from 'next/image'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import { Autoplay, Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 const testimonials = [
   {
@@ -26,6 +32,30 @@ const testimonials = [
     content: "Excellent platform with great support. The community is very helpful and engaging.",
     rating: 5,
     image: "https://ui-avatars.com/api/?name=Anita+Desai&background=f59e0b&color=fff"
+  },
+  {
+    id: 4,
+    name: "Vikram Singh",
+    role: "Full Stack Developer",
+    content: "The hands-on projects and real-world applications made all the difference in my learning journey.",
+    rating: 5,
+    image: "https://ui-avatars.com/api/?name=Vikram+Singh&background=dc2626&color=fff"
+  },
+  {
+    id: 5,
+    name: "Meera Patel",
+    role: "UX Designer",
+    content: "RAAS Learning's industry-focused curriculum helped me transition into tech successfully.",
+    rating: 5,
+    image: "https://ui-avatars.com/api/?name=Meera+Patel&background=7c3aed&color=fff"
+  },
+  {
+    id: 6,
+    name: "Arjun Kumar",
+    role: "DevOps Engineer",
+    content: "The mentorship and career guidance provided by RAAS Learning were invaluable to my success.",
+    rating: 5,
+    image: "https://ui-avatars.com/api/?name=Arjun+Kumar&background=059669&color=fff"
   }
 ]
 
@@ -42,38 +72,68 @@ export function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((testimonial) => (
-            <Card key={testimonial.id} className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 mb-6 italic">
-                  &quot;{testimonial.content}&quot;
-                </p>
-                <div className="flex items-center gap-3">
-                  <Image
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    width={48}
-                    height={48}
-                    className="rounded-full"
-                  />
-                  <div>
-                    <div className="font-semibold text-gray-900 dark:text-white">
-                      {testimonial.name}
+        {/* Auto-sliding Testimonials Carousel */}
+        <div className="max-w-6xl mx-auto">
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={30}
+            slidesPerView={1}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+            }}
+            pagination={{ 
+              clickable: true,
+              dynamicBullets: true,
+            }}
+            autoplay={{ 
+              delay: 10000, 
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true
+            }}
+            loop={true}
+            className="testimonials-swiper"
+          >
+            {testimonials.map((testimonial) => (
+              <SwiperSlide key={testimonial.id}>
+                <Card className="h-full hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6 h-full flex flex-col">
+                    <div className="flex items-center gap-1 mb-4">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      ))}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      {testimonial.role}
+                    <p className="text-gray-600 dark:text-gray-400 mb-6 italic flex-grow">
+                      &quot;{testimonial.content}&quot;
+                    </p>
+                    <div className="flex items-center gap-3 mt-auto">
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        width={48}
+                        height={48}
+                        className="rounded-full"
+                      />
+                      <div>
+                        <div className="font-semibold text-gray-900 dark:text-white">
+                          {testimonial.name}
+                        </div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">
+                          {testimonial.role}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  </CardContent>
+                </Card>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </section>

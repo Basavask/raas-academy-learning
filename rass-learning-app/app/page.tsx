@@ -4,6 +4,7 @@ import { PartnershipSection } from '@/components/home/partnership-section'
 import { FeaturesSection } from '@/components/home/features-section'
 import { CoursePreview } from '@/components/home/course-preview'
 import { SuccessStories } from '@/components/home/success-stories'
+import { PressCoverage } from '@/components/home/press-coverage'
 import { CTASection } from '@/components/home/cta-section'
 import { StatsSection } from '@/components/home/stats-section'
 import { SubscribeNews } from '@/components/common/subscribe-news'
@@ -29,6 +30,9 @@ export default function HomePage() {
       </div>
       <div className="border-t border-gray-200 dark:border-gray-700">
         <SuccessStories />
+      </div>
+      <div className="border-t border-gray-200 dark:border-gray-700">
+        <PressCoverage />
       </div>
       <div className="border-t border-gray-200 dark:border-gray-700">
         <CTASection />
