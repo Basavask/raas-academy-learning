@@ -1,16 +1,13 @@
-import { notFound } from 'next/navigation'
-import { prisma } from '@/lib/db/prisma'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth/config'
-import { checkEnrollment } from '@/lib/db/utils'
 import { CourseDetailView } from '@/components/courses/course-detail-view'
+import { prisma } from '@/lib/db/prisma'
+import { notFound } from 'next/navigation'
 
 interface CourseDetailPageProps {
   params: Promise<{ id: string }>
 }
 
 export default async function CourseDetailPage({ params }: CourseDetailPageProps) {
-  const session = await getServerSession(authOptions)
+  // const session = await getServerSession(authOptions)
   const { id } = await params;
   const course = await prisma.course.findUnique({
     where: { 
@@ -31,15 +28,30 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
     notFound()
   }
 
-  const isEnrolled = session?.user?.id 
-    ? await checkEnrollment(session.user.id, course.id)
-    : false
+  // const isEnrolled = session?.user?.id 
+  //   ? await checkEnrollment(session.user.id, course.id)
+  //   : false
 
   return (
     <CourseDetailView 
-      course={course} 
-      isEnrolled={isEnrolled}
-      isAuthenticated={!!session}
+      course={{
+        id: course.id,
+        title: course.title,
+        description: course.description,
+        price: course.price,
+        imageUrl: course.imageUrl || undefined,
+        category: course.category || undefined,
+        level: course.level || undefined,
+        duration: course.duration || undefined,
+        modules: course.modules?.map(module => ({
+          id: module.id,
+          title: module.title,
+          description: module.description || undefined,
+          order: module.order,
+          duration: module.duration || undefined
+        })),
+        _count: course._count
+      }}
     />
   )
 }

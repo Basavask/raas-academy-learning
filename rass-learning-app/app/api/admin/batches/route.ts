@@ -2,6 +2,24 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db/prisma'
 import { requireAdmin } from '@/lib/auth/guard'
 
+interface BatchWithEnrollments {
+  id: string
+  batchNumber: string
+  startDate: Date
+  endDate: Date
+  maxStudents: number
+  isActive: boolean
+  enrollments: Array<{
+    id: string
+    user: {
+      id: string
+      name: string | null
+      email: string
+      studentId: string | null
+    }
+  }>
+}
+
 // GET - Fetch all batches for a course
 export async function GET(request: NextRequest) {
   try {
@@ -14,7 +32,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Course ID is required' }, { status: 400 })
     }
     
-    const batches = await prisma.courseBatch.findMany({
+    const batches = await (prisma as unknown as typeof prisma & { courseBatch: { findMany: (args: unknown) => Promise<BatchWithEnrollments[]> } }).courseBatch.findMany({
       where: { courseId },
       include: {
         enrollments: {
@@ -53,7 +71,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Check if batch number already exists for this course
-    const existingBatch = await prisma.courseBatch.findFirst({
+    const existingBatch = await (prisma as unknown as typeof prisma & { courseBatch: { findFirst: (args: unknown) => Promise<BatchWithEnrollments | null> } }).courseBatch.findFirst({
       where: { courseId, batchNumber }
     })
     
@@ -61,7 +79,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Batch number already exists for this course' }, { status: 400 })
     }
     
-    const batch = await prisma.courseBatch.create({
+    const batch = await (prisma as unknown as typeof prisma & { courseBatch: { create: (args: unknown) => Promise<BatchWithEnrollments> } }).courseBatch.create({
       data: {
         courseId,
         batchNumber,
@@ -104,7 +122,7 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Batch ID is required' }, { status: 400 })
     }
     
-    const batch = await prisma.courseBatch.update({
+    const batch = await (prisma as unknown as typeof prisma & { courseBatch: { update: (args: unknown) => Promise<BatchWithEnrollments> } }).courseBatch.update({
       where: { id },
       data: {
         batchNumber,
@@ -149,16 +167,16 @@ export async function DELETE(request: NextRequest) {
     }
     
     // Check if batch has enrollments
-    const batchWithEnrollments = await prisma.courseBatch.findUnique({
+    const batchWithEnrollments = await (prisma as unknown as typeof prisma & { courseBatch: { findUnique: (args: unknown) => Promise<BatchWithEnrollments | null> } } ).courseBatch.findUnique({
       where: { id },
       include: { enrollments: true }
     })
     
-    if (batchWithEnrollments?.enrollments.length > 0) {
+    if (batchWithEnrollments?.enrollments?.length && batchWithEnrollments.enrollments?.length > 0) {
       return NextResponse.json({ error: 'Cannot delete batch with enrolled students' }, { status: 400 })
     }
     
-    await prisma.courseBatch.delete({
+    await (prisma as unknown as typeof prisma & { courseBatch: { delete: (args: unknown) => Promise<void> } }).courseBatch.delete({
       where: { id }
     })
     

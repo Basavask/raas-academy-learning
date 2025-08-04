@@ -9,6 +9,24 @@ interface CoursePageProps {
   params: Promise<{ id: string }>
 }
 
+interface BatchWithEnrollments {
+  id: string
+  batchNumber: string
+  startDate: Date
+  endDate: Date
+  maxStudents: number
+  isActive: boolean
+  enrollments: Array<{
+    id: string
+    user: {
+      id: string
+      name: string | null
+      email: string
+      studentId: string | null
+    }
+  }>
+}
+
 export default async function CourseDetailsPage({ params }: CoursePageProps) {
   await requireAdmin()
   const { id } = await params
@@ -25,7 +43,7 @@ export default async function CourseDetailsPage({ params }: CoursePageProps) {
         }
       }
     }),
-    prisma.courseBatch.findMany({
+    (prisma as typeof prisma & { courseBatch: { findMany: (args: unknown) => Promise<BatchWithEnrollments[]> } }).courseBatch.findMany({
       where: { courseId: id },
       include: {
         enrollments: {
@@ -49,6 +67,22 @@ export default async function CourseDetailsPage({ params }: CoursePageProps) {
     notFound()
   }
 
+  // Transform batches to match the expected interface
+  const transformedBatches = batches.map((batch: BatchWithEnrollments) => ({
+    ...batch,
+    startDate: batch.startDate.toISOString().split('T')[0],
+    endDate: batch.endDate.toISOString().split('T')[0],
+    enrollments: batch.enrollments.map((enrollment) => ({
+      id: enrollment.id,
+      user: {
+        id: enrollment.user.id,
+        name: enrollment.user.name || '',
+        email: enrollment.user.email,
+        studentId: enrollment.user.studentId || undefined
+      }
+    }))
+  }))
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
@@ -70,7 +104,7 @@ export default async function CourseDetailsPage({ params }: CoursePageProps) {
           <BatchManagement 
             courseId={course.id} 
             courseTitle={course.title} 
-            batches={batches}
+            batches={transformedBatches}
           />
         </TabsContent>
       </Tabs>
