@@ -1,6 +1,6 @@
 import { prisma } from './prisma'
 import bcrypt from 'bcryptjs'
-import { Prisma } from '@prisma/client'
+import { Enrollment, Prisma } from '@prisma/client'
 import type { SafeUser } from '@/types'
 
 // User utilities
@@ -149,7 +149,7 @@ export async function getAdminStats() {
   
   const totalRevenue = payments.reduce((sum: unknown, payment: unknown) => (sum as number) + (payment as { amount: number }).amount, 0)
   
-  const recentEnrollments = await prisma.enrollment.findMany({
+  const recentEnrollments = await (prisma as unknown as typeof prisma & { enrollment: { findMany: (args: unknown) => Promise<Enrollment[]> } }).enrollment.findMany({
     take: 5,
     orderBy: { enrolledAt: 'desc' },
     include: {
@@ -163,6 +163,7 @@ export async function getAdminStats() {
           phone: true,
           address: true,
           bio: true,
+          studentId: true,
           createdAt: true,
           updatedAt: true,
         },

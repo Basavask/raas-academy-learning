@@ -1,13 +1,9 @@
-import { Metadata } from 'next'
+"use client"
+
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ExternalLink, Calendar, Newspaper } from 'lucide-react'
 import Image from 'next/image'
-
-export const metadata: Metadata = {
-  title: 'Press Coverage - RAAS Learning',
-  description: 'Latest news and press coverage about RAAS Learning from leading publications',
-}
 
 const pressArticles = [
   {
