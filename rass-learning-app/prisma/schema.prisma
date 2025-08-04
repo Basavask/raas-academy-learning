@@ -18,6 +18,7 @@ model User {
   phone         String?
   address       String?     @db.Text
   bio           String?     @db.Text
+  studentId     String?     @unique // Unique student ID generated after enrollment
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   
@@ -43,8 +44,27 @@ model Course {
   modules       CourseModule[]
   enrollments   Enrollment[]
   payments      Payment[]
+  batches       CourseBatch[]
   
   @@map("courses")
+}
+
+model CourseBatch {
+  id            String      @id @default(cuid())
+  courseId      String
+  batchNumber   String      // e.g., "Batch 1", "Batch 2"
+  startDate     DateTime
+  endDate       DateTime
+  maxStudents   Int         @default(50)
+  isActive      Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  course        Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  enrollments   Enrollment[]
+  
+  @@unique([courseId, batchNumber])
+  @@map("course_batches")
 }
 
 model CourseModule {
@@ -68,6 +88,7 @@ model Enrollment {
   id            String      @id @default(cuid())
   userId        String
   courseId      String
+  batchId       String?     // Link to specific batch
   paymentId     String?
   enrolledAt    DateTime    @default(now())
   progress      Float       @default(0)
@@ -75,6 +96,7 @@ model Enrollment {
   
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   course        Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  batch         CourseBatch? @relation(fields: [batchId], references: [id])
   payment       Payment?    @relation(fields: [paymentId], references: [id])
   
   @@unique([userId, courseId])

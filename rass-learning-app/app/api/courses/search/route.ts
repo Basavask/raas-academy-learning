@@ -10,11 +10,8 @@ export async function GET(req: NextRequest) {
     const durations = searchParams.get('durations')?.split(',').filter(Boolean) || []
     const priceRanges = searchParams.get('priceRanges')?.split(',').filter(Boolean) || []
 
-    // Normalize the category for DB matching
-    let categoryFilter = categories;
-    if (categoryFilter) {
-      categoryFilter = categoryFilter.toLowerCase().replace(/\s+/g, '-');
-    }
+    // Parse categories - handle multiple categories separated by commas
+    const categoryList = categories ? categories.split(',').filter(Boolean) : [];
 
     // Build where clause
     const where: Record<string, unknown> = {
@@ -33,10 +30,10 @@ export async function GET(req: NextRequest) {
       })
     }
 
-    // Category filter
-    if (categoryFilter) {
+    // Category filter - handle multiple categories
+    if (categoryList.length > 0) {
       (where.AND as Record<string, unknown>[]).push({
-        category: categoryFilter
+        category: { in: categoryList }
       })
     }
 
@@ -100,6 +97,8 @@ export async function GET(req: NextRequest) {
       delete where.AND
     }
 
+    console.log('Search query:', { search, categories: categoryList, where })
+
     const courses = await prisma.course.findMany({
       where,
       include: {
@@ -109,6 +108,8 @@ export async function GET(req: NextRequest) {
       },
       orderBy: { createdAt: 'desc' }
     })
+
+    console.log('Found courses:', courses.length)
 
     return NextResponse.json(courses)
   } catch (error) {

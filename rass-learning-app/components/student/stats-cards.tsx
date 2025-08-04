@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card'
-import { BookOpen, Clock, Trophy, DollarSign } from 'lucide-react'
+import { BookOpen, Clock, Trophy } from 'lucide-react'
 import { StudentStats } from '@/types'
 
 interface StudentStatsCardsProps {
@@ -29,17 +29,10 @@ export function StudentStatsCards({ stats }: StudentStatsCardsProps) {
       bgColor: 'bg-green-500',
       description: 'Finished courses',
     },
-    {
-      title: 'Total Invested',
-      value: `₹${stats.totalSpent.toLocaleString()}`,
-      icon: DollarSign,
-      bgColor: 'bg-purple-500',
-      description: 'In your education',
-    },
   ]
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {cards.map((card, index) => (
         <Card key={index}>
           <CardContent className="p-6">
